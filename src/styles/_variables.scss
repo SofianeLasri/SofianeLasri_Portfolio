@@ -1,0 +1,200 @@
+@use "sass:color";
+
+// Color system
+
+// NOTE: Les déclarations des couleurs sont dans le désordre car on base les calculs sur la couleur primaire
+// scss-docs-start color-variables
+$red: #dc3545;
+$orange: #F78E57;
+$yellow: #ffc107;
+$green: #0c9e47;
+// scss-docs-end color-variables
+
+$primary: $orange;
+$primary-color-hue: color.hue($primary);
+
+// scss-docs-start gray-color-variables
+$white: #fff;
+$gray-100: hsl($primary-color-hue, 17%, 98%);
+$gray-200: hsl($primary-color-hue, 16%, 93%);
+$gray-300: hsl($primary-color-hue, 14%, 89%);
+$gray-400: hsl($primary-color-hue, 14%, 83%);
+$gray-500: hsl($primary-color-hue, 11%, 71%);
+$gray-600: hsl($primary-color-hue, 7%, 46%);
+$gray-700: hsl($primary-color-hue, 9%, 31%);
+$gray-800: hsl($primary-color-hue, 10%, 23%);
+$gray-900: hsl($primary-color-hue, 11%, 15%);
+$black: #000;
+// scss-docs-end gray-color-variables
+
+// scss-docs-start theme-color-variables
+$success: $green;
+$warning: $yellow;
+$danger: $red;
+$dark: $gray-900;
+$dark-alt: $gray-800;
+$light: $gray-200;
+// scss-docs-end theme-color-variables
+
+$dark-gradient: linear-gradient(180deg, $dark -0.7%, $gray-800 99.3%);
+$primary-gradient: linear-gradient(90deg, $primary 0%, rgba($primary, 0.75) 100%);
+$light-gradient: linear-gradient(180deg, $gray-200 0%, rgba($gray-200, 0.75) 100%);
+
+$gradients: (
+        "dark": $dark-gradient,
+        "primary": $primary-gradient,
+        "light": $light-gradient
+);
+
+// scss-docs-start theme-colors-map
+$theme-colors: (
+        "primary": $primary,
+        "success": $success,
+        "warning": $warning,
+        "danger": $danger,
+        "light": $light,
+        "white": $white,
+        "dark": $dark,
+        "dark-alt": $dark-alt
+);
+
+// fusv-disable
+$red-100: tint-color($red, 80%);
+$red-200: tint-color($red, 60%);
+$red-300: tint-color($red, 40%);
+$red-400: tint-color($red, 20%);
+$red-500: $red;
+$red-600: shade-color($red, 20%);
+$red-700: shade-color($red, 40%);
+$red-800: shade-color($red, 60%);
+$red-900: shade-color($red, 80%);
+
+$orange-100: tint-color($orange, 80%);
+$orange-200: tint-color($orange, 60%);
+$orange-300: tint-color($orange, 40%);
+$orange-400: tint-color($orange, 20%);
+$orange-500: $orange;
+$orange-600: shade-color($orange, 20%);
+$orange-700: shade-color($orange, 40%);
+$orange-800: shade-color($orange, 60%);
+$orange-900: shade-color($orange, 80%);
+
+$yellow-100: tint-color($yellow, 80%);
+$yellow-200: tint-color($yellow, 60%);
+$yellow-300: tint-color($yellow, 40%);
+$yellow-400: tint-color($yellow, 20%);
+$yellow-500: $yellow;
+$yellow-600: shade-color($yellow, 20%);
+$yellow-700: shade-color($yellow, 40%);
+$yellow-800: shade-color($yellow, 60%);
+$yellow-900: shade-color($yellow, 80%);
+
+$green-100: tint-color($green, 80%);
+$green-200: tint-color($green, 60%);
+$green-300: tint-color($green, 40%);
+$green-400: tint-color($green, 20%);
+$green-500: $green;
+$green-600: shade-color($green, 20%);
+$green-700: shade-color($green, 40%);
+$green-800: shade-color($green, 60%);
+$green-900: shade-color($green, 80%);
+
+$reds: (
+        "red-100": $red-100,
+        "red-200": $red-200,
+        "red-300": $red-300,
+        "red-400": $red-400,
+        "red-500": $red-500,
+        "red-600": $red-600,
+        "red-700": $red-700,
+        "red-800": $red-800,
+        "red-900": $red-900
+);
+
+$oranges: (
+        "orange-100": $orange-100,
+        "orange-200": $orange-200,
+        "orange-300": $orange-300,
+        "orange-400": $orange-400,
+        "orange-500": $orange-500,
+        "orange-600": $orange-600,
+        "orange-700": $orange-700,
+        "orange-800": $orange-800,
+        "orange-900": $orange-900
+);
+
+$yellows: (
+        "yellow-100": $yellow-100,
+        "yellow-200": $yellow-200,
+        "yellow-300": $yellow-300,
+        "yellow-400": $yellow-400,
+        "yellow-500": $yellow-500,
+        "yellow-600": $yellow-600,
+        "yellow-700": $yellow-700,
+        "yellow-800": $yellow-800,
+        "yellow-900": $yellow-900
+);
+
+$greens: (
+        "green-100": $green-100,
+        "green-200": $green-200,
+        "green-300": $green-300,
+        "green-400": $green-400,
+        "green-500": $green-500,
+        "green-600": $green-600,
+        "green-700": $green-700,
+        "green-800": $green-800,
+        "green-900": $green-900
+);
+// fusv-enable
+
+
+// Typography
+//
+// Font, line-height, and color for body text, headings, and more.
+$font-family-sans-serif: "Inter", sans-serif !important;
+
+$font-weight-lighter: lighter;
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-bolder: bolder;
+
+$headings-font-weight: $font-weight-bold;
+
+// Grid breakpoints
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+
+// scss-docs-start grid-breakpoints
+$grid-breakpoints: (
+        xs: 0,
+        sm: 500px,
+        md: 768px,
+        lg: 900px,
+        xl: 1280px,
+        xxl: 1440px,
+        xxxl: 1600px
+);
+// scss-docs-end grid-breakpoints
+
+@include _assert-ascending($grid-breakpoints, "$grid-breakpoints");
+@include _assert-starts-at-zero($grid-breakpoints, "$grid-breakpoints");
+
+
+// Grid containers
+//
+// Define the maximum width of `.container` for different screen sizes.
+
+// scss-docs-start container-max-widths
+$container-max-widths: (
+        sm: map-get($grid-breakpoints, sm) - map-get($grid-breakpoints, sm) * .05,
+        md: map-get($grid-breakpoints, md) - map-get($grid-breakpoints, md) * .05,
+        lg: map-get($grid-breakpoints, lg) - map-get($grid-breakpoints, lg) * .05,
+        xl: map-get($grid-breakpoints, xl) - map-get($grid-breakpoints, xl) * .05,
+        xxl: map-get($grid-breakpoints, xxl) - map-get($grid-breakpoints, xxl) * .05,
+        xxxl: map-get($grid-breakpoints, xxxl) - map-get($grid-breakpoints, xxxl) * .05
+);
+// scss-docs-end container-max-widths

@@ -1,0 +1,8 @@
+@use "sass:map";
+
+@each $name, $gradient in $gradients {
+    .bg-gradient-#{$name} {
+        background: $gradient;
+        background-clip: text;
+    }
+}
