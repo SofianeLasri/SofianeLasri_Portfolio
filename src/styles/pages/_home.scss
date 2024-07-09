@@ -4,7 +4,8 @@
 .navbar {
     @extend .container;
     display: flex;
-    padding: 4rem 0;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
     justify-content: space-between;
     align-items: center;
 
@@ -23,9 +24,11 @@
                 .gradient-bg {
                     fill: url(#logo_sl_gradient);
                 }
+
                 .first-color {
                     stop-color: $primary;
                 }
+
                 .second-color {
                     stop-color: $primary;
                 }
@@ -42,6 +45,7 @@
                 line-height: 1.25rem;
                 @extend .bg-gradient-dark;
             }
+
             .desc {
                 font-size: 0.875rem;
                 line-height: 0.875rem;
@@ -86,8 +90,258 @@
                             width: 100%;
                         }
                     }
+
+                    &.active {
+                        &:after {
+                            width: 100%;
+                        }
+                    }
                 }
             }
         }
+    }
+}
+
+main {
+    @extend .container;
+
+    section {
+        width: 100%;
+    }
+}
+
+.hero-wrapper {
+    $navbar-approximative-height: 10rem;
+    min-height: 40rem;
+    height: calc(100vh - #{$navbar-approximative-height});
+    display: flex;
+    align-items: center;
+
+    @include media-breakpoint-down(xl) {
+        min-height: unset;
+        height: auto;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+
+    .hero {
+        display: flex;
+        gap: 6rem;
+
+        @include media-breakpoint-down(xl) {
+            flex-direction: column;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .portrait {
+            position: relative;
+            width: 27rem;
+            aspect-ratio: 1;
+            flex-shrink: 0;
+
+            @include media-breakpoint-down(md) {
+                width: 75%;
+            }
+
+            .portrait-wrapper {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                border-radius: $border-radius;
+                background: linear-gradient(135deg, #F0ECEA 0%, #FFF 100%);
+                box-shadow: -.3125rem -.3125rem 1rem 0 $white, 5px .3125rem 1rem 0 $gray-300;
+
+                img {
+                    position: absolute;
+                    width: 95%;
+                    object-fit: contain;
+                    border-bottom-right-radius: $border-radius;
+                    right: 0;
+                    bottom: 0;
+                }
+            }
+
+            .dots-grid {
+                position: absolute;
+                top: -2.75rem;
+                right: -2.75rem;
+                width: 17rem;
+                height: 17rem;
+
+                @include media-breakpoint-down(sm) {
+                    //display: none;
+                }
+
+                circle {
+                    fill: $gray-400;
+                }
+            }
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            gap: map.get($spacers, 4);
+
+            .heading {
+                .title {
+                    background: unset;
+                    -webkit-text-fill-color: unset;
+                }
+            }
+
+            .about-me {
+                p {
+                    font-size: 1.125rem;
+                }
+            }
+        }
+    }
+}
+
+.experience {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .section-header {
+        @extend .heading;
+        display: flex;
+
+        .title-wrapper {
+            flex-grow: 1;
+        }
+
+        .icon-wrapper {
+            display: flex;
+            align-items: center;
+
+            svg {
+                height: 5rem;
+                aspect-ratio: 1;
+            }
+        }
+    }
+
+    .sub-section {
+        .subtitle {
+            margin-bottom: 1rem;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+
+            @include media-breakpoint-down(xxl) {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            @include media-breakpoint-down(lg) {
+                grid-template-columns: 1fr;
+            }
+
+            .experience-card {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                //aspect-ratio: 2 / 1;
+                border-radius: $border-radius;
+                background: $dark-gradient;
+                box-shadow: 0 0 .25rem 0 rgba($black, 0.25);
+
+                &.primary {
+                    background: $primary-gradient;
+                }
+
+                .card-header {
+                    display: flex;
+                    padding: .125rem .8125rem;
+                    justify-content: flex-end;
+                    align-items: center;
+                    font-weight: $font-weight-semibold;
+                    color: $white;
+                }
+
+                .card-content {
+                    display: flex;
+                    padding: 1.5rem 1rem;
+                    flex-grow: 1;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 1rem;
+                    border-radius: $border-radius;
+                    background-color: $white;
+
+                    .techno-header {
+                        display: flex;
+                        align-items: center;
+                        gap: 1rem;
+
+                        .logo {
+                            width: 3.1875rem;
+                            height: 3.1875rem;
+
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: contain;
+                            }
+                        }
+
+                        .name {
+                            font-size: 1.25rem;
+                            font-weight: $font-weight-semibold;
+                        }
+                    }
+
+                    .techno-review {
+                        color: $gray-600;
+
+                        p:last-of-type {
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.meta-title {
+    color: $gray-600;
+}
+
+h1, .title {
+    @extend .bg-gradient-dark;
+    font-size: $h1-font-size;
+    font-weight: $font-weight-bold;
+    margin: 0;
+
+    @include media-breakpoint-down(md) {
+        font-size: $h2-font-size;
+    }
+}
+
+h2, .subtitle {
+    @extend .bg-gradient-dark;
+    font-size: $h4-font-size;
+    font-weight: $font-weight-semibold;
+    margin: 0;
+
+    @include media-breakpoint-down(md) {
+        font-size: $h5-font-size;
+    }
+}
+
+.section-icons-gradient {
+    .first-color {
+        stop-color: map.get($dark-gradient-colors, 1);
+    }
+
+    .second-color {
+        stop-color: map.get($dark-gradient-colors, 2);
     }
 }

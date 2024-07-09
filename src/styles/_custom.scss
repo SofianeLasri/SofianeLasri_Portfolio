@@ -2,7 +2,10 @@
 
 @each $name, $gradient in $gradients {
     .bg-gradient-#{$name} {
+        background: none;
         background: $gradient;
         background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 }

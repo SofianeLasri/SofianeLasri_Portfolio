@@ -2,8 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 import logoOrange from '../images/sl-orange.svg?raw';
 import portraitSansFond from '../images/portrait-sans-fond.avif';
-import dotsGrid from '../images/dots-grid.svg';
-import darkStackIcon from '../images/dark-stack-icon.svg';
+import dotsGrid from '../images/dots-grid.svg?raw';
+import darkStackIcon from '../images/dark-stack-icon.svg?raw';
 import ExperienceCard from "../components/ExperienceCard.astro";
 import laravelLogo from '../images/laravel-logo.svg';
 ---
@@ -21,7 +21,7 @@ import laravelLogo from '../images/laravel-logo.svg';
         </div>
         <nav aria-label="Navigation principale">
             <ul>
-                <li><a href="/">Accueil</a></li>
+                <li><a href="/" class="active">Accueil</a></li>
                 <li><a href="/#experience">Expérience</a></li>
                 <li><a href="/#projects">Projets</a></li>
                 <li><a href="/#education-carreer">Éducation & Carrière</a></li>
@@ -33,19 +33,18 @@ import laravelLogo from '../images/laravel-logo.svg';
         <section class="hero-wrapper">
             <div class="hero">
                 <div class="portrait">
+                    <Fragment set:html={dotsGrid}/>
                     <div class="portrait-wrapper">
                         <img src={portraitSansFond.src} alt="Portrait de Sofiane Lasri, sans aucune égocentrie."/>
                     </div>
-                    <img src={dotsGrid.src} alt="Arrière plan représentant une grille de points" class="dots-grid"/>
                 </div>
                 <div class="content">
                     <div class="heading">
                         <div class="meta-title">Bienvenue sur mon site</div>
-                        <h1 class="title">Salut! Je suis <span class="text-primary">Sofiane Lasri</span>,</h1>
+                        <h1 class="title">Salut! Je suis <span class="bg-gradient-primary">Sofiane Lasri</span>,</h1>
                         <h2 class="subtitle">Développeur Full-Stack</h2>
                     </div>
                     <div class="about-me">
-                        <div class="meta-title">À propos de moi</div>
                         <p>Passionné par le développement d’applications, j’adore créer de nouveaux projets afin
                             d’expérimenter de nouvelles technologies. J’aime également concevoir et réaliser des
                             interfaces graphiques, j’attribue toujours beaucoup de mérite aux sites et applications à
@@ -70,15 +69,43 @@ import laravelLogo from '../images/laravel-logo.svg';
                     <div class="meta-title">Expérience</div>
                     <h1>Expérience & Compétences</h1>
                 </div>
-                <div class="icon">
-                    <img src={darkStackIcon.src} alt="Icône représentant une pile de blocs en pyramide"/>
+                <div class="icon-wrapper">
+                    <Fragment set:html={darkStackIcon}/>
                 </div>
             </header>
             <div class="sub-section">
-                <h2 class="sub-title">Framework & Librairies</h2>
+                <h2 class="subtitle">Framework & Librairies</h2>
                 <div class="cards">
                     <ExperienceCard
                             isPrimary={true}
+                            technoType="Framework"
+                            logo={laravelLogo}
+                            name="Laravel"
+                            review="Laravel est mon framework backend préféré. <3 Travaillant quotidiennement dessus aussi bien dans le cadre professionnel que personnel, j’ai pu acquérir une bonne expérience qui me permet aujourd’hui de l’utiliser dans tous mes projets web."
+                    />
+                    <ExperienceCard
+                            isPrimary={false}
+                            technoType="Framework"
+                            logo={laravelLogo}
+                            name="Laravel"
+                            review="Laravel est mon framework backend préféré. <3 Travaillant quotidiennement dessus aussi bien dans le cadre professionnel que personnel, j’ai pu acquérir une bonne expérience qui me permet aujourd’hui de l’utiliser dans tous mes projets web."
+                    />
+                    <ExperienceCard
+                            isPrimary={false}
+                            technoType="Framework"
+                            logo={laravelLogo}
+                            name="Laravel"
+                            review="Laravel est mon framework backend préféré. <3 Travaillant quotidiennement dessus aussi bien dans le cadre professionnel que personnel, j’ai pu acquérir une bonne expérience qui me permet aujourd’hui de l’utiliser dans tous mes projets web."
+                    />
+                    <ExperienceCard
+                            isPrimary={false}
+                            technoType="Framework"
+                            logo={laravelLogo}
+                            name="Laravel"
+                            review="Laravel est mon framework backend préféré. <3 Travaillant quotidiennement dessus aussi bien dans le cadre professionnel que personnel, j’ai pu acquérir une bonne expérience qui me permet aujourd’hui de l’utiliser dans tous mes projets web."
+                    />
+                    <ExperienceCard
+                            isPrimary={false}
                             technoType="Framework"
                             logo={laravelLogo}
                             name="Laravel"
