@@ -152,13 +152,17 @@ main {
                 background: linear-gradient(135deg, #F0ECEA 0%, #FFF 100%);
                 box-shadow: -.3125rem -.3125rem 1rem 0 $white, 5px .3125rem 1rem 0 $gray-300;
 
-                img {
+                picture {
                     position: absolute;
                     width: 95%;
-                    object-fit: contain;
-                    border-bottom-right-radius: $border-radius;
                     right: 0;
                     bottom: 0;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        border-bottom-right-radius: $border-radius;
+                    }
                 }
             }
 

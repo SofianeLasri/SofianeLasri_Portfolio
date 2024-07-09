@@ -1,4 +1,5 @@
 ---
+import {Picture} from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import logoOrange from '../images/sl-orange.svg?raw';
 import portraitSansFond from '../images/portrait-sans-fond.avif';
@@ -35,7 +36,8 @@ import laravelLogo from '../images/laravel-logo.svg';
                 <div class="portrait">
                     <Fragment set:html={dotsGrid}/>
                     <div class="portrait-wrapper">
-                        <img src={portraitSansFond.src} alt="Portrait de Sofiane Lasri, sans aucune égocentrie."/>
+                        <Picture src={portraitSansFond} formats={['avif', 'webp']} loading="eager"
+                                 alt="Portrait de Sofiane Lasri, sans aucune égocentrie."/>
                     </div>
                 </div>
                 <div class="content">
