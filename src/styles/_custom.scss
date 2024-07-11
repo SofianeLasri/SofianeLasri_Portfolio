@@ -2,10 +2,32 @@
 
 @each $name, $gradient in $gradients {
     .bg-gradient-#{$name} {
-        background: none;
         background: $gradient;
         background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
+}
+
+@mixin bg-gradient($name: null) {
+    $color: null;
+    @if $name == null {
+        @if $enable-dark-mode {
+            $color: $light-gradient;
+        } @else {
+            $color: $dark-gradient;
+        }
+        //$color: $dark-gradient;
+
+        @include color-mode(dark) {
+            //$color: $light-gradient;
+        }
+    } @else {
+        $color: map.get($gradients, $name);
+    }
+
+    background: $color;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

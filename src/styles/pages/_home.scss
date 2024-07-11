@@ -43,13 +43,13 @@
                 font-size: 1.25rem;
                 font-weight: $font-weight-bold;
                 line-height: 1.25rem;
-                @extend .bg-gradient-dark;
+                @include bg-gradient;
             }
 
             .desc {
                 font-size: 0.875rem;
                 line-height: 0.875rem;
-                @extend .bg-gradient-dark;
+                @include bg-gradient;
             }
         }
     }
@@ -246,70 +246,6 @@ main {
             @include media-breakpoint-down(lg) {
                 grid-template-columns: 1fr;
             }
-
-            .experience-card {
-                display: flex;
-                flex-direction: column;
-                width: 100%;
-                //aspect-ratio: 2 / 1;
-                border-radius: $border-radius;
-                background: $dark-gradient;
-                box-shadow: 0 0 .25rem 0 rgba($black, 0.25);
-
-                &.primary {
-                    background: $primary-gradient;
-                }
-
-                .card-header {
-                    display: flex;
-                    padding: .125rem .8125rem;
-                    justify-content: flex-end;
-                    align-items: center;
-                    font-weight: $font-weight-semibold;
-                    color: $white;
-                }
-
-                .card-content {
-                    display: flex;
-                    padding: 1.5rem 1rem;
-                    flex-grow: 1;
-                    flex-direction: column;
-                    align-items: flex-start;
-                    gap: 1rem;
-                    border-radius: $border-radius;
-                    background-color: $white;
-
-                    .techno-header {
-                        display: flex;
-                        align-items: center;
-                        gap: 1rem;
-
-                        .logo {
-                            width: 3.1875rem;
-                            height: 3.1875rem;
-
-                            img {
-                                width: 100%;
-                                height: 100%;
-                                object-fit: contain;
-                            }
-                        }
-
-                        .name {
-                            font-size: 1.25rem;
-                            font-weight: $font-weight-semibold;
-                        }
-                    }
-
-                    .techno-review {
-                        color: $gray-600;
-
-                        p:last-of-type {
-                            margin-bottom: 0;
-                        }
-                    }
-                }
-            }
         }
     }
 }
@@ -319,7 +255,7 @@ main {
 }
 
 h1, .title {
-    @extend .bg-gradient-dark;
+    @include bg-gradient;
     font-size: $h1-font-size;
     font-weight: $font-weight-bold;
     margin: 0;
@@ -330,7 +266,7 @@ h1, .title {
 }
 
 h2, .subtitle {
-    @extend .bg-gradient-dark;
+    @include bg-gradient;
     font-size: $h4-font-size;
     font-weight: $font-weight-semibold;
     margin: 0;
@@ -347,5 +283,15 @@ h2, .subtitle {
 
     .second-color {
         stop-color: map.get($dark-gradient-colors, 2);
+    }
+
+    @include color-mode(dark) {
+        .first-color {
+            stop-color: map.get($light-gradient-colors, 1);
+        }
+
+        .second-color {
+            stop-color: map.get($light-gradient-colors, 2);
+        }
     }
 }
