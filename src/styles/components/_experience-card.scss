@@ -7,6 +7,16 @@
     background: $dark-gradient;
     box-shadow: 0 0 .25rem 0 rgba($black, 0.25);
 
+    @include color-mode(dark) {
+        background: $light-gradient;
+
+        &:not(.primary) {
+            .card-header {
+                color: $black;
+            }
+        }
+    }
+
     &.primary {
         background: $primary-gradient;
     }
@@ -30,6 +40,10 @@
         gap: 1rem;
         border-radius: $border-radius;
         background-color: $white;
+
+        @include color-mode(dark) {
+            background-color: $dark;
+        }
 
         .techno-header {
             display: flex;
@@ -55,6 +69,10 @@
 
         .techno-review {
             color: $gray-600;
+
+            @include color-mode(dark) {
+                color: $gray-400;
+            }
 
             p:last-of-type {
                 margin-bottom: 0;

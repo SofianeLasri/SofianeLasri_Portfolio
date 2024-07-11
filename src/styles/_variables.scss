@@ -2,6 +2,7 @@
 
 // Color system
 
+$color-mode-type: media-query;
 // NOTE: Les déclarations des couleurs sont dans le désordre car on base les calculs sur la couleur primaire
 // scss-docs-start color-variables
 $red: #dc3545;

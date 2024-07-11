@@ -12,22 +12,16 @@
 @mixin bg-gradient($name: null) {
     $color: null;
     @if $name == null {
-        @if $enable-dark-mode {
-            $color: $light-gradient;
-        } @else {
-            $color: $dark-gradient;
-        }
-        //$color: $dark-gradient;
+        background: $dark-gradient;
 
         @include color-mode(dark) {
-            //$color: $light-gradient;
+            background: $light-gradient;
         }
     } @else {
-        $color: map.get($gradients, $name);
+        background: map.get($gradients, $name);
     }
 
-    background: $color;
-    background-clip: text;
+    background-clip: text !important;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
