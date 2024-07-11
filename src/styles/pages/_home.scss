@@ -54,6 +54,46 @@
         }
     }
 
+    .menu-mobile-btn {
+        @include button-outline-variant($dark);
+        display: none;
+        padding: calc($btn-padding-y + .25rem);
+        aspect-ratio: 1;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+
+        svg {
+            height: 1rem;
+            fill: $dark;
+        }
+
+        &:hover {
+            svg {
+                fill: $white;
+            }
+        }
+
+        @include color-mode(dark) {
+            @include button-outline-variant($light);
+
+            svg {
+                fill: $light;
+            }
+
+            &:hover {
+                svg {
+                    fill: $dark;
+                }
+            }
+        }
+
+        @include media-breakpoint-down(lg) {
+            display: flex;
+            cursor: pointer;
+        }
+    }
+
     nav {
         display: flex;
         align-items: center;
