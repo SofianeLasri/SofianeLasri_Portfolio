@@ -1,16 +1,61 @@
 ---
+import {getLanguage, useTranslations} from "../i18n/utils";
 import {Picture} from 'astro:assets';
+import {getEntry} from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import logoOrange from '../images/sl-orange.svg?raw';
 import portraitSansFond from '../images/portrait-sans-fond.avif';
 import dotsGrid from '../images/dots-grid.svg?raw';
 import darkStackIcon from '../images/dark-stack-icon.svg?raw';
 import ExperienceCard from "../components/ExperienceCard.astro";
-import laravelLogo from '../images/laravel-logo.svg';
+import laravelLogo from '../images/brands-logo/laravel.svg';
+import vuejsLogo from '../images/brands-logo/vuejs.svg';
+import nestjsLogo from '../images/brands-logo/nestjs.svg';
+import bootstrapLogo from '../images/brands-logo/bootstrap.svg';
+import prismaLogo from '../images/brands-logo/prisma.svg';
+import sequelizeLogo from '../images/brands-logo/sequelize.svg';
+import phpLogo from '../images/brands-logo/php.svg';
+import typescriptLogo from '../images/brands-logo/typescript.svg';
+import sassLogo from '../images/brands-logo/sass.svg';
+import javaLogo from '../images/brands-logo/java.svg';
+import csharpLogo from '../images/brands-logo/csharp.svg';
+import tuxLogo from '../images/brands-logo/tux.svg';
+import figmaLogo from '../images/brands-logo/figma.svg';
+import gitlabLogo from '../images/brands-logo/gitlab.svg';
 import faBarsSolid from '../icons-svg/bars-solid.svg?raw';
+import * as console from "node:console";
+
+const lang = getLanguage(Astro.preferredLocale);
+const trans = useTranslations(lang);
+
+const allSoftSkills = await getEntry('homepage', lang + '/soft-skills')
+    .then((entry) => entry.data);
+
+const technoLogo = {
+    "laravel": laravelLogo,
+    "vuejs": vuejsLogo,
+    "nestjs": nestjsLogo,
+    "bootstrap": bootstrapLogo,
+    "prisma": prismaLogo,
+    "sequelize": sequelizeLogo,
+    "php": phpLogo,
+    "typescript": typescriptLogo,
+    "sass": sassLogo,
+    "java": javaLogo,
+    "csharp": csharpLogo,
+    "linux": tuxLogo,
+    "figma": figmaLogo,
+    "gitlab": gitlabLogo,
+}
+
+const softSkillsCategoriesTitles = {
+    "framework": trans('framework-and-libraries'),
+    "language": trans('programming-languages'),
+    "additional": trans('additional-skills'),
+}
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="Sofiane Lasri">
     <header class="navbar">
         <div class="logo-section">
             <div class="logo">
@@ -23,7 +68,7 @@ import faBarsSolid from '../icons-svg/bars-solid.svg?raw';
         </div>
         <nav aria-label="Navigation principale">
             <ul>
-                <li><a href="/" class="active">Accueil</a></li>
+                <li><a href="/" class="active">{trans('nav.home')}</a></li>
                 <li><a href="/#experience">Expérience</a></li>
                 <li><a href="/#projects">Projets</a></li>
                 <li><a href="/#education-carreer">Éducation & Carrière</a></li>
@@ -79,46 +124,22 @@ import faBarsSolid from '../icons-svg/bars-solid.svg?raw';
                     <Fragment set:html={darkStackIcon}/>
                 </div>
             </header>
-            <div class="sub-section">
-                <h2 class="subtitle">Framework & Librairies</h2>
-                <div class="cards">
-                    <ExperienceCard
-                            isPrimary={true}
-                            technoType="Framework"
-                            logo={laravelLogo}
-                            name="Laravel"
-                            review="Laravel est mon framework backend préféré. <3 Travaillant quotidiennement dessus aussi bien dans le cadre professionnel que personnel, j’ai pu acquérir une bonne expérience qui me permet aujourd’hui de l’utiliser dans tous mes projets web."
-                    />
-                    <ExperienceCard
-                            isPrimary={false}
-                            technoType="Framework"
-                            logo={laravelLogo}
-                            name="Laravel"
-                            review="Laravel est mon framework backend préféré. <3 Travaillant quotidiennement dessus aussi bien dans le cadre professionnel que personnel, j’ai pu acquérir une bonne expérience qui me permet aujourd’hui de l’utiliser dans tous mes projets web."
-                    />
-                    <ExperienceCard
-                            isPrimary={false}
-                            technoType="Framework"
-                            logo={laravelLogo}
-                            name="Laravel"
-                            review="Laravel est mon framework backend préféré. <3 Travaillant quotidiennement dessus aussi bien dans le cadre professionnel que personnel, j’ai pu acquérir une bonne expérience qui me permet aujourd’hui de l’utiliser dans tous mes projets web."
-                    />
-                    <ExperienceCard
-                            isPrimary={false}
-                            technoType="Framework"
-                            logo={laravelLogo}
-                            name="Laravel"
-                            review="Laravel est mon framework backend préféré. <3 Travaillant quotidiennement dessus aussi bien dans le cadre professionnel que personnel, j’ai pu acquérir une bonne expérience qui me permet aujourd’hui de l’utiliser dans tous mes projets web."
-                    />
-                    <ExperienceCard
-                            isPrimary={false}
-                            technoType="Framework"
-                            logo={laravelLogo}
-                            name="Laravel"
-                            review="Laravel est mon framework backend préféré. <3 Travaillant quotidiennement dessus aussi bien dans le cadre professionnel que personnel, j’ai pu acquérir une bonne expérience qui me permet aujourd’hui de l’utiliser dans tous mes projets web."
-                    />
-                </div>
-            </div>
+            {Object.keys(allSoftSkills).map((technoType) => (
+                    <div class="sub-section">
+                        <h2 class="subtitle">{softSkillsCategoriesTitles[technoType]}</h2>
+                        <div class="cards">
+                            {allSoftSkills[technoType].map((softSkill) => (
+                                <ExperienceCard
+                                    isPrimary={softSkill.preferred}
+                                    technoType={softSkill.translatedTechnoType}
+                                    logo={technoLogo[softSkill.id]}
+                                    name={softSkill.name}
+                                    review={softSkill.review}
+                                />
+                            ))}
+                        </div>
+                    </div>
+            ))}
         </section>
     </main>
 </Layout>

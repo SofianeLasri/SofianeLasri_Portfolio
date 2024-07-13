@@ -1,0 +1,109 @@
+{
+  "framework": [
+    {
+      "preferred": true,
+      "technoType": "framework",
+      "translatedTechnoType": "Framework",
+      "id": "laravel",
+      "name": "Laravel",
+      "review": "Laravel est mon framework backend préféré. <3 \n\nTravaillant quotidiennement dessus aussi bien dans le cadre professionnel que personnel, j’ai pu acquérir une bonne expérience qui me permet aujourd’hui de l’utiliser dans tous mes projets web."
+    },
+    {
+      "technoType": "framework",
+      "translatedTechnoType": "Framework",
+      "id": "vuejs",
+      "name": "Vue.js",
+      "review": "Bien que je ne sois pas encore totalement à l’aise avec VueJS, c’est le loin le framework Front-End que je maitrîse le mieux.\n\nJ’aime son approche du DOM virtuel, contrairement à React que je trouve beaucoup moins ordonné."
+    },
+    {
+      "technoType": "framework",
+      "translatedTechnoType": "Framework",
+      "id": "nestjs",
+      "name": "NestJS",
+      "review": "NestJS est un framework que j’aime assez car, contrairement à un projet construit autour dExpress, il nous donne une bonne architecture à suivre.\n\nCela est fortement appréciable lorsque l’on souhaite écrire du code maintenable et lisible aux yeux de tous."
+    },
+    {
+      "preferred": true,
+      "technoType": "library",
+      "translatedTechnoType": "Librairie",
+      "id": "bootstrap",
+      "name": "Bootstrap",
+      "review": "Souvent mal perçue à cause l’utilisation intensive de sa forme compilée, Bootstrap reste une excellente base de librairie graphique offrant de nombreux outils.\n\nJe prend toujours beaucoup de plaisir à l’utiliser dans de nouveaux projets, j’aime sa grande modularité."
+    },
+    {
+      "technoType": "library",
+      "translatedTechnoType": "Librairie",
+      "id": "prisma",
+      "name": "Prisma",
+      "review": "Prisma est ma bonne surprise de l’année 2024. :)\n\nL’ayant découvert au travers des différents projets scolaires de cette année, j’ai été agréablement surpris par sa simplicité d’utilisation, mais aussi par sa grande polyvalence."
+    },
+    {
+      "technoType": "library",
+      "translatedTechnoType": "Librairie",
+      "id": "sequelize",
+      "name": "Sequelize",
+      "review": "Sequelize est le premier ORM auquel j’ai touché, bien avant Laravel Eloquent.\n\nMême si aujourd’hui je préfère utiliser Prisma, je le connais assez bien et serais toujours prêt à retravailler avec lui. :)"
+    }
+  ],
+  "language": [
+    {
+      "preferred": true,
+      "technoType": "language",
+      "translatedTechnoType": "Langage",
+      "id": "php",
+      "name": "Php",
+      "review": "Programmant en PHP depuis de nombreuses années (2019), j’ai créé de nombreux projets avec ce langage.\n\nAllant du simple site internet au framework maison, je me suis forgé au fil des années une véritable base de connaissances."
+    },
+    {
+      "technoType": "language",
+      "translatedTechnoType": "Langage",
+      "id": "typescript",
+      "name": "TypeScript",
+      "review": "Beaucoup l’aiment, beaucoup le détestent, mais il faut reconnaitre que TypeScript a apporté un véritable vent de fraicheur à Javascript.\n\nAyant développé de nombreuses applications avec ECMA Script 5, TS a été LA révélation. Vive le typage !"
+    },
+    {
+      "technoType": "language",
+      "translatedTechnoType": "Langage",
+      "id": "sass",
+      "name": "Sass",
+      "review": "Comme pour TS, je ne pense pas que l’on puisse qualifier Sass de langage. Mais bon, soit.\n\nSass permet de simplement créer des librairies graphiques pour son projet. C’est littéralement un “must have”, cela fait plusieurs années que je ne peux plus m’en passer."
+    },
+    {
+      "technoType": "language",
+      "translatedTechnoType": "Langage",
+      "id": "java",
+      "name": "Java",
+      "review": "Je suis bien loin d’être un expert en Java, mais, dans la mesure où je développe assez régulièrement avec, je ne peux pas non plus l’omettre de cette liste.\n\nJ’aime bien Java, je trouve le langage assez cool."
+    },
+    {
+      "technoType": "language",
+      "translatedTechnoType": "Langage",
+      "id": "csharp",
+      "name": "C# / .NET",
+      "review": "Exactement comme pour Java, je ne suis pas un expert en C#, mais également loin d’être un débutant.\n\nJ’ai développé de nombreux prototypes de jeux en C# au travers d’Unity, mais également quelques petites applications en ligne de commande avec .NET."
+    }
+  ],
+  "additional": [
+    {
+      "technoType": "additional",
+      "translatedTechnoType": "Annexe",
+      "id": "linux",
+      "name": "SysAdmin Linux",
+      "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."
+    },
+    {
+      "technoType": "additional",
+      "translatedTechnoType": "Annexe",
+      "id": "figma",
+      "name": "Figma",
+      "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."
+    },
+    {
+      "technoType": "additional",
+      "translatedTechnoType": "Annexe",
+      "id": "gitlab",
+      "name": "GitLab",
+      "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."
+    }
+  ]
+}

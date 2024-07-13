@@ -1,6 +1,9 @@
 ---
+import { marked } from 'marked';
 import {Picture} from 'astro:assets';
 const {isPrimary, technoType, logo, name, review} = Astro.props;
+
+const reviewHtml = marked(review);
 ---
 <div class={`experience-card ${isPrimary ? 'primary' : ''}`}>
     <div class="card-header">
@@ -9,12 +12,12 @@ const {isPrimary, technoType, logo, name, review} = Astro.props;
     <div class="card-content">
         <div class="techno-header">
             <div class="logo">
-                <Picture src={logo} formats={['avif', 'webp']} alt={`Logo de ${name}`}/>
+                <Picture src={logo} formats={['avif', 'webp']} inferS alt={`Logo de ${name}`}/>
             </div>
             <div class="name">{name}</div>
         </div>
         <div class="techno-review">
-            <p>{review}</p>
+            <Fragment set:html={reviewHtml}/>
         </div>
     </div>
 </div>
