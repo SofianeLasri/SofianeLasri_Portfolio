@@ -1,0 +1,29 @@
+---
+import {Picture} from 'astro:assets';
+
+export interface Props {
+    name: string;
+    description: string;
+    logo: Picture;
+    startDate: string;
+    endDate: string;
+}
+
+const {name, description, logo, startDate, endDate} = Astro.props;
+---
+
+<div class="education-career-card">
+    <div class="logo">
+        <Picture src={logo} formats={['avif', 'webp']} alt={`Logo de ${name}`}/>
+    </div>
+    <div class="content">
+        <div class="name-desc">
+            <div class="name">{name}</div>
+            <div class="description">{description}</div>
+        </div>
+        <div class="date">
+            <span class="start-date">{startDate}</span> -
+            <span class="end-date">{endDate}</span>
+        </div>
+    </div>
+</div>

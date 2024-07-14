@@ -12,6 +12,7 @@ export const ui = {
         'framework-and-libraries': 'Framework & Libraries',
         'programming-languages': 'Programming Languages',
         'additional-skills': 'Additional Skills',
+        'today-short': 'Today',
     },
     fr: {
         'nav.home': 'Accueil',
@@ -20,6 +21,7 @@ export const ui = {
         'framework-and-libraries': 'Framework & Librairies',
         'programming-languages': 'Langages de programmation',
         'additional-skills': 'Annexes',
+        'today-short': 'Aujd.',
     },
 } as const;
 

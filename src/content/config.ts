@@ -29,7 +29,29 @@ const projectsCollection = defineCollection({
     }),
 });
 
+const educationCollection = defineCollection({
+    schema: ({image}) => z.object({
+        name: z.string(),
+        description: z.string(),
+        logo: image(),
+        startDate: z.date(),
+        endDate: z.date(),
+    }),
+});
+
+const careerCollection = defineCollection({
+    schema: ({image}) => z.object({
+        name: z.string(),
+        description: z.string(),
+        logo: image(),
+        startDate: z.date(),
+        endDate: z.date().optional()
+    }),
+});
+
 export const collections = {
     'homepage': softSkillsCollection,
     'projects': projectsCollection,
+    'education': educationCollection,
+    'career': careerCollection,
 };

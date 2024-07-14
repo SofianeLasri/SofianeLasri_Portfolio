@@ -285,6 +285,28 @@ main {
         }
     }
 
+    &.two-columns {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
+        .sub-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: map.get($spacers, 3);
+
+            @include media-breakpoint-down(lg) {
+                grid-template-columns: 1fr;
+            }
+
+            .cards {
+                display: flex;
+                flex-direction: column;
+                gap: map.get($spacers, 3);
+            }
+        }
+    }
+
     &.three-columns {
         display: flex;
         flex-direction: column;
@@ -298,7 +320,7 @@ main {
             .cards {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
-                gap: 1.5rem;
+                gap: map.get($spacers, 4);
 
                 @include media-breakpoint-down(xxl) {
                     grid-template-columns: repeat(2, 1fr);

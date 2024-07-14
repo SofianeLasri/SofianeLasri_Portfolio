@@ -26,8 +26,9 @@ import gitlabLogo from '../images/brands-logo/gitlab.svg?raw';
 import faBars from '@fortawesome/free-solid-svg-icons/faBars'
 import FontAwesome from "../components/FontAwesome.astro";
 import SectionHeader from "../components/SectionHeader.astro";
-import placeholderPicture from '../images/placeholder.png';
 import ProjectCard from "../components/ProjectCard.astro";
+import atomIcon from '../images/sections-icons/atom.svg?raw';
+import EducationCareerCard from "../components/EducationCareerCard.astro";
 
 const lang = getLanguage(Astro.preferredLocale);
 const trans = useTranslations(lang);
@@ -61,7 +62,40 @@ const softSkillsCategoriesTitles = {
 const projects = await getCollection("projects", ({id}) => {
     return id.startsWith(lang + '/');
 });
-console.log(projects);
+
+const education = await getCollection("education", ({id}) => {
+    return id.startsWith(lang + '/');
+});
+
+const career = await getCollection("career", ({id}) => {
+    return id.startsWith(lang + '/');
+});
+
+function formatDate(isoDate=null) {
+    if(isoDate === null) return trans('today-short');
+    let date = new Date(isoDate).toLocaleDateString(lang, {month: 'short', year: 'numeric'});
+    return date.charAt(0).toUpperCase() + date.slice(1);
+}
+
+const sortedAndFormattedEducation = education.sort((a, b) => new Date(b.data.startDate) - new Date(a.data.startDate))
+    .map((education) => ({
+        ...education,
+        data: {
+            ...education.data,
+            startDate: formatDate(education.data.startDate),
+            endDate: formatDate(education.data.endDate),
+        }
+    }));
+
+const sortedAndFormattedCareer = career.sort((a, b) => new Date(b.data.startDate) - new Date(a.data.startDate))
+    .map((career) => ({
+        ...career,
+        data: {
+            ...career.data,
+            startDate: formatDate(career.data.startDate),
+            endDate: formatDate(career.data.endDate),
+        }
+    }));
 ---
 
 <Layout title="Sofiane Lasri">
@@ -152,7 +186,34 @@ console.log(projects);
             <div class="sub-section">
                 <div class="cards">
                     {projects.map((project) => (
-                        <ProjectCard cover={project.data.cover} projectType={project.data.category} name={project.data.name} description={project.data.description}/>
+                            <ProjectCard cover={project.data.cover} projectType={project.data.category}
+                                         name={project.data.name} description={project.data.description}/>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        <section id="education-carreer" class="body-section two-columns">
+            <SectionHeader title="Formation & Carrière" metaTitle="Expérience professionnelle" icon={atomIcon}/>
+            <div class="sub-section">
+                <div class="cards">
+                    <h2 class="subtitle">Éducation</h2>
+                    {sortedAndFormattedEducation.map((education) => (
+                            <EducationCareerCard name={education.data.name}
+                                                 description={education.data.description}
+                                                 logo={education.data.logo}
+                                                 startDate={education.data.startDate}
+                                                 endDate={education.data.endDate}/>
+                    ))}
+                </div>
+                <div class="cards">
+                    <h2 class="subtitle">Carrière</h2>
+                    {sortedAndFormattedCareer.map((career) => (
+                            <EducationCareerCard name={career.data.name}
+                                                 description={career.data.description}
+                                                 logo={career.data.logo}
+                                                 startDate={career.data.startDate}
+                                                 endDate={career.data.endDate}/>
                     ))}
                 </div>
             </div>

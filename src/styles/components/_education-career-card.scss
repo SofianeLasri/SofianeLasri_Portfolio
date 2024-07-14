@@ -1,0 +1,46 @@
+@use "sass:map";
+
+.education-career-card {
+    display: flex;
+    align-items: center;
+    gap: map.get($spacers, 3);
+    padding: map.get($spacers, 3);
+    border-radius: $border-radius;
+    background-color: $white;
+    box-shadow: 0 0 .25rem 0 rgba($black, 0.25);
+
+    @include color-mode(dark) {
+        background-color: $dark;
+        box-shadow: 0 0 .25rem 0 rgba($white, 0.25);
+    }
+
+    .logo {
+        flex-shrink: 0;
+        width: 4.5rem;
+        height: 4.5rem;
+        border-radius: $border-radius;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-grow: 1;
+
+        .name {
+            font-weight: $font-weight-semibold;
+            font-size: $h5-font-size;
+        }
+
+        .date {
+            @extend .text-muted;
+        }
+    }
+}
