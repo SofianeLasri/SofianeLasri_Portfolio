@@ -1,0 +1,51 @@
+@use "sass:map";
+
+footer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 2.75rem 0;
+    border-top: $border-width solid $border-color;
+
+    @include color-mode(dark) {
+        border-color: $gray-600;
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+
+        @include media-breakpoint-down(xl) {
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .logo-part {
+            display: flex;
+            align-items: center;
+            gap: map.get($spacers, 3);
+
+            .logo {
+                height: 2rem;
+            }
+
+            .portfolio-name {
+                display: flex;
+                flex-direction: column;
+
+                .name {
+                    font-size: 1.25rem;
+                    font-weight: $font-weight-bold;
+                    line-height: 1.25rem;
+                    @include bg-gradient;
+                }
+
+                .desc {
+                    font-size: 0.875rem;
+                    line-height: 0.875rem;
+                    @include bg-gradient;
+                }
+            }
+        }
+    }
+}
