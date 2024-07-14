@@ -20,7 +20,7 @@
       "translatedTechnoType": "Framework",
       "id": "nestjs",
       "name": "NestJS",
-      "review": "NestJS est un framework que j’aime assez car, contrairement à un projet construit autour dExpress, il nous donne une bonne architecture à suivre.\n\nCela est fortement appréciable lorsque l’on souhaite écrire du code maintenable et lisible aux yeux de tous."
+      "review": "NestJS est un framework que j’aime assez car, contrairement à un projet construit autour d'Express, il nous donne une bonne architecture à suivre.\n\nCela est fortement appréciable lorsque l’on souhaite écrire du code maintenable et lisible aux yeux de tous."
     },
     {
       "preferred": true,
@@ -89,21 +89,21 @@
       "translatedTechnoType": "Annexe",
       "id": "linux",
       "name": "SysAdmin Linux",
-      "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."
+      "review": "Gérant des serveurs fonctionnants sous Linux depuis de nombreuses années (2014), je n’éprouve aucune difficulté à utiliser Linux au quotidien."
     },
     {
       "technoType": "additional",
       "translatedTechnoType": "Annexe",
       "id": "figma",
       "name": "Figma",
-      "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."
+      "review": "J’aime beaucoup réaliser les interfaces de mes projets persos. Pour faire cela, Figma est juste le meilleur outil qui existe. Toutefois, mon corps de métier n’étant ni le graphisme, ni le design, je peux passer énormément de temps à concevoir une maquette."
     },
     {
       "technoType": "additional",
       "translatedTechnoType": "Annexe",
       "id": "gitlab",
-      "name": "GitLab",
-      "review": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor."
+      "name": "GitLab CI",
+      "review": "Ayant dû configurer plusieurs intégrations continues sur divers projets persos, j’ai dû apprendre à maitriser GitLab et son système ci/cd.\n\nJ’ai également travaillé avec GitHub Actions sur quelques projets, mais de manière moins poussée."
     }
   ]
 }

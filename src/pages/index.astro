@@ -23,7 +23,6 @@ import tuxLogo from '../images/brands-logo/tux.svg';
 import figmaLogo from '../images/brands-logo/figma.svg';
 import gitlabLogo from '../images/brands-logo/gitlab.svg';
 import faBarsSolid from '../icons-svg/bars-solid.svg?raw';
-import * as console from "node:console";
 
 const lang = getLanguage(Astro.preferredLocale);
 const trans = useTranslations(lang);
@@ -104,11 +103,15 @@ const softSkillsCategoriesTitles = {
                             personnels, je possède une bonne maîtrise de Laravel, TypeScript et de Sass. :)</p>
                     </div>
 
-                    <div class="links">
-                        <a href="#" class="btn btn-outline-dark" aria-label="Télécharger mon CV">Télécharger mon CV</a>
-                        <a href="#" class="btn btn-outline-dark" aria-label="GitHub">GitHub</a>
-                        <a href="#" class="btn btn-outline-dark" aria-label="LinkedIn">LinkedIn</a>
-                        <a href="#" class="btn btn-outline-dark" aria-label="Dribbble">Dribbble</a>
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="https://1drv.ms/b/s!Atk178NpnuLmhJoiwLEN2FRww-mGcA?e=I1kL8w" target="_blank"
+                           class="btn btn-outline-dark" aria-label="Télécharger mon CV">Télécharger mon CV</a>
+                        <a href="https://github.com/SofianeLasri/" target="_blank" class="btn btn-outline-dark"
+                           aria-label="GitHub">GitHub</a>
+                        <a href="https://www.linkedin.com/in/sofiane-lasri-trienpont/" target="_blank"
+                           class="btn btn-outline-dark" aria-label="LinkedIn">LinkedIn</a>
+                        <a href="https://dribbble.com/SofianeLasri" target="_blank" class="btn btn-outline-dark"
+                           aria-label="Dribbble">Dribbble</a>
                     </div>
                 </div>
             </div>
@@ -129,13 +132,13 @@ const softSkillsCategoriesTitles = {
                         <h2 class="subtitle">{softSkillsCategoriesTitles[technoType]}</h2>
                         <div class="cards">
                             {allSoftSkills[technoType].map((softSkill) => (
-                                <ExperienceCard
-                                    isPrimary={softSkill.preferred}
-                                    technoType={softSkill.translatedTechnoType}
-                                    logo={technoLogo[softSkill.id]}
-                                    name={softSkill.name}
-                                    review={softSkill.review}
-                                />
+                                    <ExperienceCard
+                                            isPrimary={softSkill.preferred}
+                                            technoType={softSkill.translatedTechnoType}
+                                            logo={technoLogo[softSkill.id]}
+                                            name={softSkill.name}
+                                            review={softSkill.review}
+                                    />
                             ))}
                         </div>
                     </div>
