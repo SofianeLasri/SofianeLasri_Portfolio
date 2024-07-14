@@ -7,23 +7,27 @@ import logoOrange from '../images/sl-orange.svg?raw';
 import portraitSansFond from '../images/portrait-sans-fond.avif';
 import dotsGrid from '../images/dots-grid.svg?raw';
 import stackIcon from '../images/sections-icons/stack.svg?raw';
+import monolithsIcon from '../images/sections-icons/monoliths.svg?raw';
 import ExperienceCard from "../components/ExperienceCard.astro";
-import laravelLogo from '../images/brands-logo/laravel.svg';
-import vuejsLogo from '../images/brands-logo/vuejs.svg';
-import nestjsLogo from '../images/brands-logo/nestjs.svg';
-import bootstrapLogo from '../images/brands-logo/bootstrap.svg';
-import prismaLogo from '../images/brands-logo/prisma.svg';
-import sequelizeLogo from '../images/brands-logo/sequelize.svg';
-import phpLogo from '../images/brands-logo/php.svg';
-import typescriptLogo from '../images/brands-logo/typescript.svg';
-import sassLogo from '../images/brands-logo/sass.svg';
-import javaLogo from '../images/brands-logo/java.svg';
-import csharpLogo from '../images/brands-logo/csharp.svg';
-import tuxLogo from '../images/brands-logo/tux.svg';
-import figmaLogo from '../images/brands-logo/figma.svg';
-import gitlabLogo from '../images/brands-logo/gitlab.svg';
+import laravelLogo from '../images/brands-logo/laravel.svg?raw';
+import vuejsLogo from '../images/brands-logo/vuejs.svg?raw';
+import nestjsLogo from '../images/brands-logo/nestjs.svg?raw';
+import bootstrapLogo from '../images/brands-logo/bootstrap.svg?raw';
+import prismaLogo from '../images/brands-logo/prisma.svg?raw';
+import sequelizeLogo from '../images/brands-logo/sequelize.svg?raw';
+import phpLogo from '../images/brands-logo/php.svg?raw';
+import typescriptLogo from '../images/brands-logo/typescript.svg?raw';
+import sassLogo from '../images/brands-logo/sass.svg?raw';
+import javaLogo from '../images/brands-logo/java.svg?raw';
+import csharpLogo from '../images/brands-logo/csharp.svg?raw';
+import tuxLogo from '../images/brands-logo/tux.svg?raw';
+import figmaLogo from '../images/brands-logo/figma.svg?raw';
+import gitlabLogo from '../images/brands-logo/gitlab.svg?raw';
 import faBars from '@fortawesome/free-solid-svg-icons/faBars'
 import FontAwesome from "../components/FontAwesome.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import placeholderPicture from '../images/placeholder.png';
+import ProjectCard from "../components/ProjectCard.astro";
 
 const lang = getLanguage(Astro.preferredLocale);
 const trans = useTranslations(lang);
@@ -106,28 +110,20 @@ const softSkillsCategoriesTitles = {
 
                     <div class="d-flex flex-wrap gap-2">
                         <a href="https://1drv.ms/b/s!Atk178NpnuLmhJoiwLEN2FRww-mGcA?e=I1kL8w" target="_blank"
-                           class="btn btn-outline-dark" aria-label="Télécharger mon CV">Télécharger mon CV</a>
-                        <a href="https://github.com/SofianeLasri/" target="_blank" class="btn btn-outline-dark"
+                           class="btn" aria-label="Télécharger mon CV">Télécharger mon CV</a>
+                        <a href="https://github.com/SofianeLasri/" target="_blank" class="btn"
                            aria-label="GitHub">GitHub</a>
                         <a href="https://www.linkedin.com/in/sofiane-lasri-trienpont/" target="_blank"
-                           class="btn btn-outline-dark" aria-label="LinkedIn">LinkedIn</a>
-                        <a href="https://dribbble.com/SofianeLasri" target="_blank" class="btn btn-outline-dark"
+                           class="btn" aria-label="LinkedIn">LinkedIn</a>
+                        <a href="https://dribbble.com/SofianeLasri" target="_blank" class="btn"
                            aria-label="Dribbble">Dribbble</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="experience" class="experience">
-            <header class="section-header">
-                <div class="title-wrapper">
-                    <div class="meta-title">Expérience</div>
-                    <h1>Expérience & Compétences</h1>
-                </div>
-                <div class="icon-wrapper">
-                    <Fragment set:html={stackIcon}/>
-                </div>
-            </header>
+        <section id="experience" class="body-section three-columns">
+            <SectionHeader title="Expérience & Compétences" metaTitle="Expérience" icon={stackIcon}/>
             {Object.keys(allSoftSkills).map((technoType) => (
                     <div class="sub-section">
                         <h2 class="subtitle">{softSkillsCategoriesTitles[technoType]}</h2>
@@ -144,6 +140,15 @@ const softSkillsCategoriesTitles = {
                         </div>
                     </div>
             ))}
+        </section>
+
+        <section id="projects" class="body-section three-columns">
+            <SectionHeader title="Mes projets" metaTitle="Portfolio" icon={monolithsIcon}/>
+            <div class="sub-section">
+                <div class="cards">
+                    <ProjectCard cover={placeholderPicture} projectType="Développement web" name="Nom du projet" description="Description du projet"/>
+                </div>
+            </div>
         </section>
     </main>
 </Layout>

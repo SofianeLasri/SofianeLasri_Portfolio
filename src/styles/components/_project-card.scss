@@ -1,0 +1,86 @@
+@use "sass:map";
+
+.project-card {
+    $padding: map.get($spacers, 2);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: $padding;
+    gap: $padding;
+    border-radius: $border-radius;
+    background-color: $white;
+    box-shadow: 0 0 .25rem 0 rgba($black, 0.25);
+
+    @include color-mode(dark) {
+        background-color: $dark;
+        box-shadow: 0 0 .25rem 0 rgba($white, 0.25);
+    }
+
+    .header {
+        position: relative;
+        display: flex;
+        align-items:center;
+
+        picture {
+            height: 17rem;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: $border-radius;
+            }
+        }
+
+        .project-type-badge {
+            position: absolute;
+            top: $padding;
+            right: $padding;
+            padding: .125rem $padding;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: $border-radius;
+            //border: $border-width solid $primary-gradient;
+            margin: $border-width;
+            color: $white;
+            font-size: $font-size-sm;
+            font-weight: $font-weight-medium;
+            z-index: 0;
+
+            &:before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: $primary-gradient;
+                border-radius: inherit;
+                margin: calc($border-width * -1);
+                z-index: -2;
+            }
+
+            &:after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: $dark-gradient;
+                border-radius: inherit;
+                z-index: -1;
+            }
+        }
+    }
+
+    .content {
+        padding: map.get($spacers, 1) $padding;
+
+        .title {
+            font-weight: $font-weight-semibold;
+            font-size: $h5-font-size;
+            margin-bottom: map.get($spacers, 1);
+        }
+
+        .desc {
+            @extend .text-muted;
+        }
+    }
+}

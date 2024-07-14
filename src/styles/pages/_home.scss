@@ -196,6 +196,11 @@ main {
                 background: linear-gradient(135deg, #F0ECEA 0%, #FFF 100%);
                 box-shadow: -.3125rem -.3125rem 1rem 0 $white, 5px .3125rem 1rem 0 $gray-300;
 
+                @include color-mode(dark) {
+                    background: $dark-gradient;
+                    box-shadow: -.3125rem -.3125rem 1rem 0 $gray-700, 5px .3125rem 1rem 0 $dark;
+                }
+
                 picture {
                     position: absolute;
                     width: 95%;
@@ -235,6 +240,7 @@ main {
 
             .heading {
                 .title {
+                    font-weight: $font-weight-bold;
                     background: unset;
                     -webkit-text-fill-color: unset;
                 }
@@ -245,14 +251,20 @@ main {
                     font-size: 1.125rem;
                 }
             }
+
+            .btn {
+                @include button-outline-variant($dark);
+
+                @include color-mode(dark) {
+                    @include button-outline-variant($light);
+                }
+            }
         }
     }
 }
 
-.experience {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+.body-section {
+    margin-bottom: 4rem;
 
     .section-header {
         @extend .heading;
@@ -273,22 +285,28 @@ main {
         }
     }
 
-    .sub-section {
-        .subtitle {
-            margin-bottom: 1rem;
-        }
+    &.three-columns {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
 
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-
-            @include media-breakpoint-down(xxl) {
-                grid-template-columns: repeat(2, 1fr);
+        .sub-section {
+            .subtitle {
+                margin-bottom: 1rem;
             }
 
-            @include media-breakpoint-down(lg) {
-                grid-template-columns: 1fr;
+            .cards {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem;
+
+                @include media-breakpoint-down(xxl) {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+
+                @include media-breakpoint-down(lg) {
+                    grid-template-columns: 1fr;
+                }
             }
         }
     }
@@ -296,6 +314,7 @@ main {
 
 .meta-title {
     color: $gray-600;
+    font-weight: $font-weight-medium;
 
     @include color-mode(dark) {
         color: $gray-400;
@@ -305,7 +324,7 @@ main {
 h1, .title {
     @include bg-gradient;
     font-size: $h1-font-size;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     margin: 0;
 
     @include media-breakpoint-down(md) {
@@ -340,6 +359,14 @@ h2, .subtitle {
 
         .second-color {
             stop-color: map.get($light-gradient-colors, 2);
+        }
+    }
+}
+
+.dark-icon {
+    @include color-mode(dark) {
+        path {
+            fill: $white;
         }
     }
 }

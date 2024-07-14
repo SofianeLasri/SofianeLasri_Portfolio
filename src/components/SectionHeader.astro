@@ -1,0 +1,19 @@
+---
+export interface Props {
+    metaTitle: string;
+    title: string;
+    icon: string;
+}
+
+const { metaTitle, title, icon } = Astro.props;
+---
+
+<header class="section-header">
+    <div class="title-wrapper">
+        <div class="meta-title">{metaTitle}</div>
+        <h1>{title}</h1>
+    </div>
+    <div class="icon-wrapper">
+        <Fragment set:html={icon}/>
+    </div>
+</header>

@@ -6,13 +6,13 @@ const {isPrimary, technoType, logo, name, review} = Astro.props;
 const reviewHtml = marked(review);
 ---
 <div class={`experience-card ${isPrimary ? 'primary' : ''}`}>
-    <div class="card-header">
+    <div class="header">
         <div class="techno-type">{technoType}</div>
     </div>
-    <div class="card-content">
+    <div class="content">
         <div class="techno-header">
             <div class="logo">
-                <Picture src={logo} formats={['avif', 'webp']} inferS alt={`Logo de ${name}`}/>
+                <Fragment set:html={logo}/>
             </div>
             <div class="name">{name}</div>
         </div>

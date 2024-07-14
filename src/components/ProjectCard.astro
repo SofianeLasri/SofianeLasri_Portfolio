@@ -1,0 +1,25 @@
+---
+import {Picture} from 'astro:assets';
+
+export interface Props {
+    cover: string;
+    projectType: string;
+    name: string;
+    description: string;
+}
+
+const { cover, projectType, name, description } = Astro.props;
+---
+
+<div class="project-card">
+    <div class="header">
+        <Picture src={cover} formats={['avif', 'webp']} alt={`Couverture du projet ${name}`}/>
+        <div class="project-type-badge">
+            {projectType}
+        </div>
+    </div>
+    <div class="content">
+        <div class="title">{name}</div>
+        <div class="desc">{description}</div>
+    </div>
+</div>
