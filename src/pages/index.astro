@@ -6,7 +6,7 @@ import Layout from '../layouts/Layout.astro';
 import logoOrange from '../images/sl-orange.svg?raw';
 import portraitSansFond from '../images/portrait-sans-fond.avif';
 import dotsGrid from '../images/dots-grid.svg?raw';
-import darkStackIcon from '../images/dark-stack-icon.svg?raw';
+import stackIcon from '../images/sections-icons/stack.svg?raw';
 import ExperienceCard from "../components/ExperienceCard.astro";
 import laravelLogo from '../images/brands-logo/laravel.svg';
 import vuejsLogo from '../images/brands-logo/vuejs.svg';
@@ -22,7 +22,8 @@ import csharpLogo from '../images/brands-logo/csharp.svg';
 import tuxLogo from '../images/brands-logo/tux.svg';
 import figmaLogo from '../images/brands-logo/figma.svg';
 import gitlabLogo from '../images/brands-logo/gitlab.svg';
-import faBarsSolid from '../icons-svg/bars-solid.svg?raw';
+import faBars from '@fortawesome/free-solid-svg-icons/faBars'
+import FontAwesome from "../components/FontAwesome.astro";
 
 const lang = getLanguage(Astro.preferredLocale);
 const trans = useTranslations(lang);
@@ -75,7 +76,7 @@ const softSkillsCategoriesTitles = {
             </ul>
         </nav>
         <button class="btn menu-mobile-btn">
-            <Fragment set:html={faBarsSolid}/>
+            <FontAwesome icon={faBars}/>
         </button>
     </header>
     <main>
@@ -124,7 +125,7 @@ const softSkillsCategoriesTitles = {
                     <h1>Expérience & Compétences</h1>
                 </div>
                 <div class="icon-wrapper">
-                    <Fragment set:html={darkStackIcon}/>
+                    <Fragment set:html={stackIcon}/>
                 </div>
             </header>
             {Object.keys(allSoftSkills).map((technoType) => (
