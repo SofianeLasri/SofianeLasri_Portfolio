@@ -13,6 +13,11 @@ export const ui = {
         'programming-languages': 'Programming Languages',
         'additional-skills': 'Additional Skills',
         'today-short': 'Today',
+        'framework': 'Framework',
+        'language': 'Language',
+        'library': 'Library',
+        'operating-system': 'Operating System',
+        'tool': 'Tool',
     },
     fr: {
         'nav.home': 'Accueil',
@@ -22,6 +27,11 @@ export const ui = {
         'programming-languages': 'Langages de programmation',
         'additional-skills': 'Annexes',
         'today-short': 'Aujd.',
+        'framework': 'Framework',
+        'language': 'Langage',
+        'library': 'Librairie',
+        'operating-system': 'Système d\'exploitation',
+        'tool': 'Outil',
     },
 } as const;
 

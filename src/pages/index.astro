@@ -141,7 +141,7 @@ const sortedAndFormattedCareer = career.sort((a, b) => new Date(b.data.startDate
                                 return (
                                         <ExperienceCard
                                                 isPrimary={softSkill.preferred}
-                                                technoType={techno.data.type}
+                                                technoType={trans(techno.data.type)}
                                                 logo={techno.data.logo}
                                                 name={techno.data.name}
                                                 review={softSkill.review}
