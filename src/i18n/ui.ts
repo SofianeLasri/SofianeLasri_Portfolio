@@ -18,6 +18,8 @@ export const ui = {
         'library': 'Library',
         'operating-system': 'Operating System',
         'tool': 'Tool',
+        'project-type.web': 'Web Development',
+        'project-type.mobile': 'Mobile'
     },
     fr: {
         'nav.home': 'Accueil',
@@ -32,6 +34,8 @@ export const ui = {
         'library': 'Librairie',
         'operating-system': 'Système d\'exploitation',
         'tool': 'Outil',
+        'project-type.web': 'Développement Web',
+        'project-type.mobile': 'Développement Mobile',
     },
 } as const;
 

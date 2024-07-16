@@ -16,7 +16,7 @@ const softSkill = z.object({
 });
 
 const softSkillsCollection = defineCollection({
-    type: 'content',
+    type: 'data',
     schema: z.object({
         framework: z.array(softSkill),
         language: z.array(softSkill),
@@ -57,7 +57,7 @@ const careerCollection = defineCollection({
 });
 
 export const collections = {
-    'homepage': softSkillsCollection,
+    'soft-skills': softSkillsCollection,
     'projects': projectsCollection,
     'education': educationCollection,
     'career': careerCollection,

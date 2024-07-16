@@ -1,5 +1,6 @@
 ---
 import {Picture} from 'astro:assets';
+import {getLanguage,useTranslations} from "../i18n/utils";
 
 export interface Props {
     cover: Picture;
@@ -9,13 +10,16 @@ export interface Props {
 }
 
 const { cover, projectType, name, description } = Astro.props;
+const lang = getLanguage(Astro.preferredLocale);
+const trans = useTranslations(lang);
+const translatedProjectType = trans('project-type.' + projectType);
 ---
 
 <div class="project-card">
     <div class="header">
         <Picture src={cover} formats={['avif', 'webp']} alt={`Couverture du projet ${name}`}/>
         <div class="project-type-badge">
-            {projectType}
+            {translatedProjectType}
         </div>
     </div>
     <div class="content">

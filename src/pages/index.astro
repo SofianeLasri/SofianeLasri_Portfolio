@@ -19,7 +19,7 @@ import EducationCareerCard from "../components/EducationCareerCard.astro";
 const lang = getLanguage(Astro.preferredLocale);
 const trans = useTranslations(lang);
 
-const allSoftSkills = await getEntry('homepage', lang + '/soft-skills')
+const allSoftSkills = await getEntry('soft-skills', lang + '/soft-skills')
     .then((entry) => entry.data);
 
 const softSkillsCategoriesTitles = {
@@ -31,6 +31,8 @@ const softSkillsCategoriesTitles = {
 const projects = await getCollection("projects", ({id}) => {
     return id.startsWith(lang + '/');
 });
+
+console.log(projects);
 
 const education = await getCollection("education", ({id}) => {
     return id.startsWith(lang + '/');
