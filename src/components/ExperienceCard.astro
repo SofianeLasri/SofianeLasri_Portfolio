@@ -12,7 +12,8 @@ const reviewHtml = marked(review);
     <div class="content">
         <div class="techno-header">
             <div class="logo">
-                <Fragment set:html={logo}/>
+                <!--<Fragment set:html={logo}/>-->
+                <Picture src={logo} alt={name} />
             </div>
             <div class="name">{name}</div>
         </div>

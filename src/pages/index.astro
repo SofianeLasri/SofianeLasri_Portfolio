@@ -9,20 +9,6 @@ import dotsGrid from '../images/dots-grid.svg?raw';
 import stackIcon from '../images/sections-icons/stack.svg?raw';
 import monolithsIcon from '../images/sections-icons/monoliths.svg?raw';
 import ExperienceCard from "../components/ExperienceCard.astro";
-import laravelLogo from '../images/brands-logo/laravel.svg?raw';
-import vuejsLogo from '../images/brands-logo/vuejs.svg?raw';
-import nestjsLogo from '../images/brands-logo/nestjs.svg?raw';
-import bootstrapLogo from '../images/brands-logo/bootstrap.svg?raw';
-import prismaLogo from '../images/brands-logo/prisma.svg?raw';
-import sequelizeLogo from '../images/brands-logo/sequelize.svg?raw';
-import phpLogo from '../images/brands-logo/php.svg?raw';
-import typescriptLogo from '../images/brands-logo/typescript.svg?raw';
-import sassLogo from '../images/brands-logo/sass.svg?raw';
-import javaLogo from '../images/brands-logo/java.svg?raw';
-import csharpLogo from '../images/brands-logo/csharp.svg?raw';
-import tuxLogo from '../images/brands-logo/tux.svg?raw';
-import figmaLogo from '../images/brands-logo/figma.svg?raw';
-import gitlabLogo from '../images/brands-logo/gitlab.svg?raw';
 import faBars from '@fortawesome/free-solid-svg-icons/faBars'
 import FontAwesome from "../components/FontAwesome.astro";
 import SectionHeader from "../components/SectionHeader.astro";
@@ -35,23 +21,6 @@ const trans = useTranslations(lang);
 
 const allSoftSkills = await getEntry('homepage', lang + '/soft-skills')
     .then((entry) => entry.data);
-
-const technoLogo = {
-    "laravel": laravelLogo,
-    "vuejs": vuejsLogo,
-    "nestjs": nestjsLogo,
-    "bootstrap": bootstrapLogo,
-    "prisma": prismaLogo,
-    "sequelize": sequelizeLogo,
-    "php": phpLogo,
-    "typescript": typescriptLogo,
-    "sass": sassLogo,
-    "java": javaLogo,
-    "csharp": csharpLogo,
-    "linux": tuxLogo,
-    "figma": figmaLogo,
-    "gitlab": gitlabLogo,
-}
 
 const softSkillsCategoriesTitles = {
     "framework": trans('framework-and-libraries'),
@@ -167,15 +136,18 @@ const sortedAndFormattedCareer = career.sort((a, b) => new Date(b.data.startDate
                     <div class="sub-section">
                         <h2 class="subtitle">{softSkillsCategoriesTitles[technoType]}</h2>
                         <div class="cards">
-                            {allSoftSkills[technoType].map((softSkill) => (
-                                    <ExperienceCard
-                                            isPrimary={softSkill.preferred}
-                                            technoType={softSkill.translatedTechnoType}
-                                            logo={technoLogo[softSkill.id]}
-                                            name={softSkill.name}
-                                            review={softSkill.review}
-                                    />
-                            ))}
+                            {allSoftSkills[technoType].map(async (softSkill) => {
+                                let techno = await getEntry(softSkill.techno);
+                                return (
+                                        <ExperienceCard
+                                                isPrimary={softSkill.preferred}
+                                                technoType={techno.data.type}
+                                                logo={techno.data.logo}
+                                                name={techno.data.name}
+                                                review={softSkill.review}
+                                        />
+                                );
+                            })}
                         </div>
                     </div>
             ))}

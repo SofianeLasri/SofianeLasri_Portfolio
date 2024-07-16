@@ -1,0 +1,5 @@
+{
+  "logo": "./logos/prisma.svg",
+  "name": "Prisma",
+  "type": "library"
+}

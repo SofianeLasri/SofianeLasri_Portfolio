@@ -1,11 +1,17 @@
-import {z, defineCollection, reference} from 'astro:content';
+import {defineCollection, reference, z} from 'astro:content';
+
+const technologiesCollection = defineCollection({
+    type: 'data',
+    schema: ({image}) => z.object({
+        name: z.string(),
+        logo: image(),
+        type: z.string()
+    }),
+});
 
 const softSkill = z.object({
     preferred: z.boolean().optional().default(false),
-    technoType: z.string(),
-    translatedTechnoType: z.string(),
-    id: z.string(),
-    name: z.string(),
+    techno: reference('technologies'),
     review: z.string(),
 });
 
@@ -26,6 +32,7 @@ const projectsCollection = defineCollection({
         cover: image().refine((img) => img.width >= 1080, {
             message: "Cover image must be at least 1080 pixels wide!",
         }),
+        usedTechnologies: z.array(reference('technologies')).optional(),
     }),
 });
 
@@ -54,4 +61,5 @@ export const collections = {
     'projects': projectsCollection,
     'education': educationCollection,
     'career': careerCollection,
+    'technologies': technologiesCollection,
 };

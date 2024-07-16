@@ -1,0 +1,5 @@
+{
+  "logo": "./logos/nestjs.svg",
+  "name": "NestJS",
+  "type": "framework"
+}

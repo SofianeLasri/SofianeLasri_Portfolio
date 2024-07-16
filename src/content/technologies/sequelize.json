@@ -1,0 +1,5 @@
+{
+  "logo": "./logos/sequelize.svg",
+  "name": "Sequelize",
+  "type": "library"
+}
