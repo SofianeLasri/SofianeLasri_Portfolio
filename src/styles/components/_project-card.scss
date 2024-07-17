@@ -179,6 +179,9 @@
             }
 
             .meta {
+                .name {
+                    margin: 0;
+                }
                 .date {
                     font-size: $font-size-sm;
                     color: $gray-600;
