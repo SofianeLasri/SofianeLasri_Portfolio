@@ -1,21 +1,26 @@
 ---
 import {Picture} from 'astro:assets';
-import {getLanguage,useTranslations} from "../i18n/utils";
+import {getLanguage, useTranslations} from "../i18n/utils";
+import faXmark from '@fortawesome/free-solid-svg-icons/faXmark';
+import FontAwesome from "./FontAwesome.astro";
 
 export interface Props {
+    id: string;
     cover: Picture;
     projectType: string;
     name: string;
     description: string;
 }
 
-const { cover, projectType, name, description } = Astro.props;
+const {id, cover, projectType, name, description} = Astro.props;
 const lang = getLanguage(Astro.preferredLocale);
 const trans = useTranslations(lang);
 const translatedProjectType = trans('project-type.' + projectType);
+
+const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
 ---
 
-<div class="project-card">
+<div class="project-card" data-bs-toggle="modal" data-bs-target={`#${modalId}`}>
     <div class="header">
         <Picture src={cover} formats={['avif', 'webp']} alt={`Couverture du projet ${name}`}/>
         <div class="project-type-badge">
@@ -27,3 +32,48 @@ const translatedProjectType = trans('project-type.' + projectType);
         <div class="desc">{description}</div>
     </div>
 </div>
+
+<div class="modal fade" id={modalId} tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="project-modal-content">
+            <div class="modal-header">
+                <div class="background-image">
+                    <Picture src={cover} formats={['avif', 'webp']} alt={`Couverture du projet ${name}`}/>
+                </div>
+                <button class="close-btn" data-bs-dismiss="modal" aria-label="Close">
+                    <FontAwesome icon={faXmark}/>
+                </button>
+                <div class="project-meta">
+                    <div class="logo">
+                        <!-- TODO: Add logo -->
+                        <Picture src={cover} formats={['avif', 'webp']} alt={`Logo du projet ${name}`}/>
+                    </div>
+                    <div class="logo-width-faker"></div>
+                    <div class="meta">
+                        <h4 class="name">{name}</h4>
+                        <div class="date">Sept. 2023 - Sept 2025</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="section">
+                    <h4>Description</h4>
+                    <p>Métacafé est un projet de réseau social, développé sur la plateforme NodeJS avec l'aide de
+                        nombreuses libraires telles que Vue.JS, Express.JS,l'orm sequelize ou bien encore Sass.</p>
+                    <p> L'idée derrière Métacafé est de nous permettre de rencontrer d'autres personnes ayant les mêmes
+                        centres d'intérêt que nous, définis lors de notre inscription sur l'application. </p>
+                </div>
+                <div class="section">
+                    <h4>Médias</h4>
+                    <div class="medias">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>

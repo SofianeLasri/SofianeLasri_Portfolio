@@ -160,7 +160,7 @@ const sortedAndFormattedCareer = career.sort((a, b) => new Date(b.data.startDate
             <div class="sub-section">
                 <div class="cards">
                     {projects.map((project) => (
-                            <ProjectCard cover={project.data.cover} projectType={project.data.category}
+                            <ProjectCard id={project.slug} cover={project.data.cover} projectType={project.data.category}
                                          name={project.data.name} description={project.data.description}/>
                     ))}
                 </div>
