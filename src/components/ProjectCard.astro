@@ -1,5 +1,6 @@
 ---
-import {Picture} from 'astro:assets';
+import type {GetImageResult} from "astro/dist/assets/types";
+import {Picture, getImage} from 'astro:assets';
 import {getLanguage, useTranslations} from "../i18n/utils";
 import faXmark from '@fortawesome/free-solid-svg-icons/faXmark';
 import FontAwesome from "./FontAwesome.astro";
@@ -18,11 +19,23 @@ export interface Props {
     endDate: string;
 }
 
+type Media = {
+    original: GetImageResult;
+    thumbnail: GetImageResult;
+}
+
 const {id, projectType, name, description, body, cover, logo, medias, startDate, endDate} = Astro.props;
 const lang = getLanguage(Astro.preferredLocale);
 const trans = useTranslations(lang);
 const translatedProjectType = trans('project-type.' + projectType);
 const formattedBody = marked(body);
+const optimizedMedias: Media[] = [];
+
+for (const media of medias) {
+    const fullSrc = await getImage({src: media, format: 'avif'});
+    const thumbnailSrc = await getImage({src: media, format: 'avif', width: 256});
+    optimizedMedias.push({original: fullSrc, thumbnail: thumbnailSrc});
+}
 
 const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
 ---
@@ -40,7 +53,7 @@ const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
     </div>
 </div>
 
-<div class="modal fade" id={modalId} tabindex="-1">
+<div class="modal fade project-modal" id={modalId} tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable modal-xl">
         <div class="project-modal-content">
             <div class="modal-header">
@@ -69,10 +82,14 @@ const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
                 {medias.length > 0 && (
                         <div class="section">
                             <h4>Médias</h4>
-                            <div class="medias">
-                                {medias.map((media, index) => (
-                                        <Picture key={index} src={media} formats={['avif', 'webp']}
-                                                 alt={`Média ${index}`}/>
+                            <div class="medias" id={`medias-${modalId}`}>
+                                {optimizedMedias.map((media, index) => (
+                                        <a href={media.original.src}
+                                           data-pswp-width={media.original.rawOptions.src.width}
+                                           data-pswp-height={media.original.rawOptions.src.height}
+                                           target="_blank">
+                                            <img src={media.thumbnail.src} alt="" />
+                                        </a>
                                 ))}
                             </div>
                         </div>
@@ -83,5 +100,30 @@ const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
 </div>
 
 <script>
+    import PhotoSwipeLightbox from "photoswipe/lightbox";
+    import 'photoswipe/style.css';
 
+    const allProjectModals = document.querySelectorAll('.project-modal');
+
+    allProjectModals.forEach((modal) => {
+        modal.addEventListener('show.bs.modal', () => {
+            const medias = modal.querySelector('.medias');
+            const lightbox = new PhotoSwipeLightbox({
+                gallery: '#' + medias.id,
+                children: 'a',
+                pswpModule: () => import('photoswipe')
+            });
+            lightbox.init();
+        });
+
+        modal.addEventListener('hidden.bs.modal', () => {
+            const medias = modal.querySelector('.medias');
+            const lightbox = new PhotoSwipeLightbox({
+                gallery: '#' + medias.id,
+                children: 'a',
+                pswpModule: () => import('photoswipe')
+            });
+            lightbox.destroy();
+        });
+    });
 </script>
