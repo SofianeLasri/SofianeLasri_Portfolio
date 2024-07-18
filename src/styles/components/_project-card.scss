@@ -20,7 +20,7 @@
     .header {
         position: relative;
         display: flex;
-        align-items:center;
+        align-items: center;
 
         picture {
             height: 17rem;
@@ -182,6 +182,7 @@
                 .name {
                     margin: 0;
                 }
+
                 .date {
                     font-size: $font-size-sm;
                     color: $gray-600;

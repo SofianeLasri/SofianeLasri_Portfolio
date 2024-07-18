@@ -29,10 +29,16 @@ const projectsCollection = defineCollection({
         category: z.string(),
         name: z.string(),
         description: z.string(),
+        usedTechnologies: z.array(reference('technologies')).optional(),
         cover: image().refine((img) => img.width >= 1080, {
             message: "Cover image must be at least 1080 pixels wide!",
         }),
-        usedTechnologies: z.array(reference('technologies')).optional(),
+        logo: image().refine((img) => img.width >= 200 && img.width === img.height, {
+            message: "Logo must be at least 200x200 pixels!",
+        }),
+        medias: z.array(image()).optional(),
+        startDate: z.date(),
+        endDate: z.date(),
     }),
 });
 
