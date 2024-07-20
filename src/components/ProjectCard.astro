@@ -77,12 +77,12 @@ const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
             </div>
             <div class="modal-body">
                 <div class="section">
-                    <h4>Description</h4>
+                    <h4>{trans('description')}</h4>
                     <Fragment set:html={formattedBody}/>
                 </div>
                 {medias.length > 0 && (
                         <div class="section">
-                            <h4>Médias</h4>
+                            <h4>{trans('medias')}</h4>
                             <div class="medias" id={`medias-${modalId}`}>
                                 {optimizedMedias.map((media, index) => (
                                         <a href={media.original.src}

@@ -84,17 +84,17 @@ const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.start
                 <Fragment set:html={logoOrange}/>
             </div>
             <div class="portfolio-name">
-                <div class="name">Sofiane Lasri.</div>
-                <div class="desc">Développeur Full-Stack</div>
+                <div class="name">{trans('portfolio-name')}</div>
+                <div class="desc">{trans('portfolio-desc')}</div>
             </div>
         </div>
         <nav aria-label="Navigation principale">
             <ul>
                 <li><a href="/" class="active">{trans('nav.home')}</a></li>
-                <li><a href="/#experience">Expérience</a></li>
-                <li><a href="/#projects">Projets</a></li>
-                <li><a href="/#education-carreer">Éducation & Carrière</a></li>
-                <li><a href="/#contact">Contact</a></li>
+                <li><a href="/#experience">{trans('nav.experience')}</a></li>
+                <li><a href="/#projects">{trans('nav.projects')}</a></li>
+                <li><a href="/#education-carreer">{trans('nav.education-career')}</a></li>
+                <!--<li><a href="/#contact">{trans('nav.contact')}</a></li>-->
             </ul>
         </nav>
         <button class="btn menu-mobile-btn">
@@ -113,35 +113,31 @@ const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.start
                 </div>
                 <div class="content">
                     <div class="heading">
-                        <div class="meta-title">Bienvenue sur mon site</div>
-                        <h1 class="title">Salut! Je suis <span class="bg-gradient-primary">Sofiane Lasri</span>,</h1>
-                        <h2 class="subtitle">Développeur Full-Stack</h2>
+                        <div class="meta-title">{trans('hero.welcome')}</div>
+                        <h1 class="title">{trans('hero.title')} <span class="bg-gradient-primary">Sofiane Lasri</span>,</h1>
+                        <h2 class="subtitle">{trans('hero.subtitle')}</h2>
                     </div>
                     <div class="about-me">
-                        <p>Passionné par le développement d’applications, j’adore créer de nouveaux projets afin
-                            d’expérimenter de nouvelles technologies. J’aime également concevoir et réaliser des
-                            interfaces graphiques, j’attribue toujours beaucoup de mérite aux sites et applications à
-                            l’UI/UX soignée.</p>
-                        <p>Grâce à mon expérience acquise en entreprise, mais également au travers de mes divers projets
-                            personnels, je possède une bonne maîtrise de Laravel, TypeScript et de Sass. :)</p>
+                        <p>{trans('about-me.part1')}</p>
+                        <p>{trans('about-me.part2')}</p>
                     </div>
 
                     <div class="d-flex flex-wrap gap-2">
                         <a href="https://1drv.ms/b/s!Atk178NpnuLmhJoiwLEN2FRww-mGcA?e=I1kL8w" target="_blank"
-                           class="btn" aria-label="Télécharger mon CV">Télécharger mon CV</a>
+                           class="btn" aria-label={trans('btn.download-cv')}>{trans('btn.download-cv')}</a>
                         <a href="https://github.com/SofianeLasri/" target="_blank" class="btn"
-                           aria-label="GitHub">GitHub</a>
+                           aria-label={trans('btn.github')}>{trans('btn.github')}</a>
                         <a href="https://www.linkedin.com/in/sofiane-lasri-trienpont/" target="_blank"
-                           class="btn" aria-label="LinkedIn">LinkedIn</a>
+                           class="btn" aria-label={trans('btn.linkedin')}>{trans('btn.linkedin')}</a>
                         <a href="https://dribbble.com/SofianeLasri" target="_blank" class="btn"
-                           aria-label="Dribbble">Dribbble</a>
+                           aria-label={trans('btn.dribbble')}>{trans('btn.dribbble')}</a>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="experience" class="body-section three-columns">
-            <SectionHeader title="Expérience & Compétences" metaTitle="Expérience" icon={stackIcon}/>
+            <SectionHeader title={trans('section.experience-skills')} metaTitle={trans('meta.experience')} icon={stackIcon}/>
             {Object.keys(allSoftSkills).map((technoType) => (
                     <div class="sub-section">
                         <h2 class="subtitle">{softSkillsCategoriesTitles[technoType]}</h2>
@@ -164,7 +160,7 @@ const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.start
         </section>
 
         <section id="projects" class="body-section three-columns">
-            <SectionHeader title="Mes projets" metaTitle="Portfolio" icon={monolithsIcon}/>
+            <SectionHeader title={trans('section.projects')} metaTitle={trans('meta.portfolio')} icon={monolithsIcon}/>
             <div class="sub-section">
                 <div class="cards">
                     {sortedAndFormattedProjects.map((project) => (
@@ -179,10 +175,10 @@ const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.start
         </section>
 
         <section id="education-carreer" class="body-section two-columns">
-            <SectionHeader title="Formation & Carrière" metaTitle="Expérience professionnelle" icon={atomIcon}/>
+            <SectionHeader title={trans('section.education-career')} metaTitle={trans('meta.education-career')} icon={atomIcon}/>
             <div class="sub-section">
                 <div class="cards">
-                    <h2 class="subtitle">Éducation</h2>
+                    <h2 class="subtitle">{trans('section.education')}</h2>
                     {sortedAndFormattedEducation.map((education) => (
                             <EducationCareerCard name={education.data.name}
                                                  description={education.data.description}
@@ -192,7 +188,7 @@ const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.start
                     ))}
                 </div>
                 <div class="cards">
-                    <h2 class="subtitle">Carrière</h2>
+                    <h2 class="subtitle">{trans('section.career')}</h2>
                     {sortedAndFormattedCareer.map((career) => (
                             <EducationCareerCard name={career.data.name}
                                                  description={career.data.description}
