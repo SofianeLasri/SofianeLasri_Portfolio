@@ -1,6 +1,6 @@
 import {ui, defaultLang} from './ui';
 
-export function getLanguage(lang: string|null) {
+export function getLanguage(lang: string|null|undefined) {
     if (lang && lang in ui) {
         return lang;
     }

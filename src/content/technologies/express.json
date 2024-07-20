@@ -1,4 +1,5 @@
 {
   "logo": "./logos/express.svg",
-  "name": "Express.js"
+  "name": "Express.js",
+  "type": "library"
 }

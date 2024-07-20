@@ -26,7 +26,7 @@ const { title } = Astro.props;
 		<slot />
         <Footer />
 		<script>
-			import { Modal } from 'bootstrap/dist/js/bootstrap.esm.min.js'
+			import { Modal } from 'bootstrap'
 			Array.from(document.querySelectorAll('.modal'))
 				.forEach(modalNode => new Modal(modalNode), {
 					backdrop: true,

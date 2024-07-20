@@ -22,6 +22,8 @@ const trans = useTranslations(lang);
 const allSoftSkills = await getEntry('soft-skills', lang + '/soft-skills')
     .then((entry) => entry.data);
 
+const allTechnologies = await getCollection('technologies');
+
 const softSkillsCategoriesTitles = {
     "framework": trans('framework-and-libraries'),
     "language": trans('programming-languages'),
@@ -40,12 +42,13 @@ const career = await getCollection("career", ({id}) => {
     return id.startsWith(lang + '/');
 });
 
-function formatDate(isoDate = null) {
+function formatDate(isoDate: Date | null = null) {
     if (isoDate === null) return trans('today-short');
     let date = new Date(isoDate).toLocaleDateString(lang, {month: 'short', year: 'numeric'});
     return date.charAt(0).toUpperCase() + date.slice(1);
 }
 
+// @ts-ignore
 const sortedAndFormattedEducation = education.sort((a, b) => new Date(b.data.startDate) - new Date(a.data.startDate))
     .map((education) => ({
         ...education,
@@ -56,6 +59,7 @@ const sortedAndFormattedEducation = education.sort((a, b) => new Date(b.data.sta
         }
     }));
 
+// @ts-ignore
 const sortedAndFormattedCareer = career.sort((a, b) => new Date(b.data.startDate) - new Date(a.data.startDate))
     .map((career) => ({
         ...career,
@@ -66,6 +70,7 @@ const sortedAndFormattedCareer = career.sort((a, b) => new Date(b.data.startDate
         }
     }));
 
+// @ts-ignore
 const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.startDate) - new Date(a.data.startDate))
     .map((project) => ({
         ...project,
@@ -114,7 +119,8 @@ const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.start
                 <div class="content">
                     <div class="heading">
                         <div class="meta-title">{trans('hero.welcome')}</div>
-                        <h1 class="title">{trans('hero.title')} <span class="bg-gradient-primary">Sofiane Lasri</span>,</h1>
+                        <h1 class="title">{trans('hero.title')} <span class="bg-gradient-primary">Sofiane Lasri</span>,
+                        </h1>
                         <h2 class="subtitle">{trans('hero.subtitle')}</h2>
                     </div>
                     <div class="about-me">
@@ -137,13 +143,16 @@ const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.start
         </section>
 
         <section id="experience" class="body-section three-columns">
-            <SectionHeader title={trans('section.experience-skills')} metaTitle={trans('meta.experience')} icon={stackIcon}/>
+            <SectionHeader title={trans('section.experience-skills')} metaTitle={trans('meta.experience')}
+                           icon={stackIcon}/>
             {Object.keys(allSoftSkills).map((technoType) => (
                     <div class="sub-section">
                         <h2 class="subtitle">{softSkillsCategoriesTitles[technoType]}</h2>
                         <div class="cards">
-                            {allSoftSkills[technoType].map(async (softSkill) => {
-                                let techno = await getEntry(softSkill.techno);
+                            {allSoftSkills[technoType].map((softSkill) => {
+                                let techno = allTechnologies.find((techno) => techno.id === softSkill.techno.id);
+                                if (!techno) return null;
+
                                 return (
                                         <ExperienceCard
                                                 isPrimary={softSkill.preferred}
@@ -175,7 +184,8 @@ const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.start
         </section>
 
         <section id="education-carreer" class="body-section two-columns">
-            <SectionHeader title={trans('section.education-career')} metaTitle={trans('meta.education-career')} icon={atomIcon}/>
+            <SectionHeader title={trans('section.education-career')} metaTitle={trans('meta.education-career')}
+                           icon={atomIcon}/>
             <div class="sub-section">
                 <div class="cards">
                     <h2 class="subtitle">{trans('section.education')}</h2>
