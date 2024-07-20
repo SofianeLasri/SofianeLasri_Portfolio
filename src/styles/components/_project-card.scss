@@ -104,6 +104,10 @@
     border-radius: $border-radius;
     pointer-events: auto;
 
+    @include color-mode(dark) {
+        background-color: $dark;
+    }
+
     .modal-header {
         display: flex;
         flex-direction: column;
