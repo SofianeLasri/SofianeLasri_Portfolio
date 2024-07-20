@@ -3,6 +3,7 @@ import type {GetImageResult} from "astro/dist/assets/types";
 import {Picture, getImage} from 'astro:assets';
 import {getLanguage, useTranslations} from "../i18n/utils";
 import faXmark from '@fortawesome/free-solid-svg-icons/faXmark';
+import faExpand from "@fortawesome/free-solid-svg-icons/faExpand";
 import FontAwesome from "./FontAwesome.astro";
 import {marked} from "marked";
 
@@ -33,7 +34,7 @@ const optimizedMedias: Media[] = [];
 
 for (const media of medias) {
     const fullSrc = await getImage({src: media, format: 'avif'});
-    const thumbnailSrc = await getImage({src: media, format: 'avif', width: 256});
+    const thumbnailSrc = await getImage({src: media, format: 'avif', height: 512});
     optimizedMedias.push({original: fullSrc, thumbnail: thumbnailSrc});
 }
 
@@ -87,8 +88,14 @@ const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
                                         <a href={media.original.src}
                                            data-pswp-width={media.original.rawOptions.src.width}
                                            data-pswp-height={media.original.rawOptions.src.height}
-                                           target="_blank">
-                                            <img src={media.thumbnail.src} alt="" />
+                                           target="_blank"
+                                           class="media">
+                                            <img src={media.thumbnail.src} alt=""/>
+                                            <div class="overlay">
+                                                <div class="icon">
+                                                    <FontAwesome icon={faExpand}/>
+                                                </div>
+                                            </div>
                                         </a>
                                 ))}
                             </div>

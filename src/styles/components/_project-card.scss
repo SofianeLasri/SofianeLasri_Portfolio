@@ -86,9 +86,17 @@
     }
 }
 
-.project-modal-content {
-    $modal-container-width: 62rem;
+@mixin project-modal-content-width {
+    width: 62rem;
 
+    @include media-breakpoint-down(xl) {
+        width: 100%;
+        padding-left: map.get($spacers, 3);
+        padding-right: map.get($spacers, 3);
+    }
+}
+
+.project-modal-content {
     display: flex;
     flex-direction: column;
     background-color: $white;
@@ -112,6 +120,10 @@
         .background-image {
             height: 25rem;
             width: 100%;
+
+            @include media-breakpoint-down(xl) {
+                height: 20rem;
+            }
 
             img {
                 width: 100%;
@@ -152,7 +164,7 @@
         }
 
         .project-meta {
-            width: $modal-container-width;
+            @include project-modal-content-width;
             display: flex;
             gap: map.get($spacers, 3);
             position: relative;
@@ -192,12 +204,66 @@
     }
 
     .modal-body {
-        width: $modal-container-width;
+        @include project-modal-content-width;
         display: flex;
         flex-direction: column;
         gap: map.get($spacers, 3);
 
         // Overwrite Bootstrap's default styles
         padding: 4rem 0;
+
+        h4 {
+            margin-bottom: map.get($spacers, 3);
+        }
+
+        .medias {
+            width: 100%;
+            display: flex;
+            gap: map.get($spacers, 3);
+            overflow-y: hidden;
+            overflow-x: auto;
+            padding-bottom: map.get($spacers, 3);
+
+            .media {
+                width: 20rem;
+                height: 20rem;
+                border-radius: $border-radius;
+                overflow: hidden;
+                position: relative;
+                box-sizing: border-box;
+                flex-shrink: 0;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+                .overlay {
+                    position: absolute;
+                    inset: 0;
+                    background: rgba($black, 0.5);
+                    opacity: 0;
+                    transition: opacity .3s;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    svg {
+                        width: 2rem;
+                        height: 2rem;
+                        path {
+                            fill: $white;
+                        }
+                    }
+                }
+
+                &:hover {
+                    .overlay {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
     }
 }
