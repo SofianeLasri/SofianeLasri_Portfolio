@@ -1,0 +1,66 @@
+---
+import {getLanguage, useTranslations} from "../i18n/utils";
+import logoOrange from '../images/sl-orange.svg?raw';
+import faBars from '@fortawesome/free-solid-svg-icons/faBars'
+import FontAwesome from "../components/FontAwesome.astro";
+
+const lang = getLanguage(Astro.preferredLocale);
+const trans = useTranslations(lang);
+---
+<header class="navbar">
+    <div class="logo-section">
+        <div class="logo">
+            <Fragment set:html={logoOrange}/>
+        </div>
+        <div class="portfolio-name">
+            <div class="name">{trans('portfolio-name')}</div>
+            <div class="desc">{trans('portfolio-desc')}</div>
+        </div>
+    </div>
+    <nav aria-label="Navigation principale" id="nav-links">
+        <ul>
+            <li><a href="/" class="active">{trans('nav.home')}</a></li>
+            <li><a href="/#experience">{trans('nav.experience')}</a></li>
+            <li><a href="/#projects">{trans('nav.projects')}</a></li>
+            <li><a href="/#education-carreer">{trans('nav.education-career')}</a></li>
+            <!--<li><a href="/#contact">{trans('nav.contact')}</a></li>-->
+        </ul>
+    </nav>
+    <button class="btn menu-mobile-btn" id="mobile-nav-btn">
+        <FontAwesome icon={faBars}/>
+    </button>
+</header>
+
+<script>
+    const body: HTMLElement = document.getElementsByTagName("body")[0];
+    const mobileNavbarThreshold = 900;
+    const navLinks: HTMLElement = document.getElementById("nav-links");
+    const navLinksChilds: HTMLCollectionOf<HTMLLIElement> = navLinks.getElementsByTagName("li");
+    const mobileNavBtn: HTMLButtonElement = document.getElementById("mobile-nav-btn") as HTMLButtonElement;
+
+    mobileNavBtn.addEventListener("click", () => {
+        showMenu(true);
+    });
+
+    navLinks.addEventListener("click", (event: MouseEvent) => {
+        if (window.innerWidth < mobileNavbarThreshold) {
+            if (event.clientX > navLinks.offsetWidth) {
+                showMenu(false);
+            }
+        }
+    });
+
+    for (let child of navLinksChilds) {
+        child.addEventListener("click", () => showMenu(false));
+    }
+
+    function showMenu(show: boolean) {
+        if (show) {
+            navLinks.classList.add("show");
+            body.style.overflowY = "hidden";
+        } else {
+            navLinks.classList.remove("show");
+            body.style.overflowY = "auto";
+        }
+    }
+</script>

@@ -3,18 +3,16 @@ import {getLanguage, useTranslations} from "../i18n/utils";
 import {Picture} from 'astro:assets';
 import {getEntry, getCollection} from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import logoOrange from '../images/sl-orange.svg?raw';
 import portraitSansFond from '../images/portrait-sans-fond.avif';
 import dotsGrid from '../images/dots-grid.svg?raw';
 import stackIcon from '../images/sections-icons/stack.svg?raw';
 import monolithsIcon from '../images/sections-icons/monoliths.svg?raw';
 import ExperienceCard from "../components/ExperienceCard.astro";
-import faBars from '@fortawesome/free-solid-svg-icons/faBars'
-import FontAwesome from "../components/FontAwesome.astro";
 import SectionHeader from "../components/SectionHeader.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import atomIcon from '../images/sections-icons/atom.svg?raw';
 import EducationCareerCard from "../components/EducationCareerCard.astro";
+import Navbar from "../components/Navbar.astro";
 
 const lang = getLanguage(Astro.preferredLocale);
 const trans = useTranslations(lang);
@@ -83,29 +81,7 @@ const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.start
 ---
 
 <Layout title="Sofiane Lasri">
-    <header class="navbar">
-        <div class="logo-section">
-            <div class="logo">
-                <Fragment set:html={logoOrange}/>
-            </div>
-            <div class="portfolio-name">
-                <div class="name">{trans('portfolio-name')}</div>
-                <div class="desc">{trans('portfolio-desc')}</div>
-            </div>
-        </div>
-        <nav aria-label="Navigation principale">
-            <ul>
-                <li><a href="/" class="active">{trans('nav.home')}</a></li>
-                <li><a href="/#experience">{trans('nav.experience')}</a></li>
-                <li><a href="/#projects">{trans('nav.projects')}</a></li>
-                <li><a href="/#education-carreer">{trans('nav.education-career')}</a></li>
-                <!--<li><a href="/#contact">{trans('nav.contact')}</a></li>-->
-            </ul>
-        </nav>
-        <button class="btn menu-mobile-btn">
-            <FontAwesome icon={faBars}/>
-        </button>
-    </header>
+    <Navbar />
     <main>
         <section class="hero-wrapper">
             <div class="hero">
