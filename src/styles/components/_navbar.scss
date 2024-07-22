@@ -141,7 +141,7 @@
 
         @include media-breakpoint-down(lg) {
             align-items: flex-start;
-            position: absolute;
+            position: fixed;
             top: 0;
             left: -100%;
             bottom: 0;

@@ -1,7 +1,7 @@
 ---
 category: 'web'
 name: Métacafé
-description: Application de réseau social développée avec VueJS à l’occasion d’un projet scolaire.
+description: Application de type réseau social développée avec VueJS à l’occasion d’un projet scolaire.
 usedTechnologies: ['typescript', 'vuejs', 'sass', 'sequelize', 'express']
 cover: ../assets/metacafe/metacafe-cover.png
 logo: ../assets/metacafe/square-logo-with-background.avif
@@ -15,7 +15,7 @@ l'occasion de plusieurs projets notés.
 
 D'abord conçu comme une messagerie similaire à WhatsApp avec VueJS et ExpressJS, je l'ai repris quelques mois plus tard
 pour un TP de GraphDB. Les modifications à réaliser sur le serveur étant énormes, le projet a été forké et le serveur
-s'est vu être entièrement réécrit autour du framework GraphDB. L'application avait été gardée comme base, mais a été
+s'est vu être entièrement réécrit autour du framework GraphQL. L'application avait été gardée comme base, mais a été
 lourdement modifiée pour répondre à la nouvelle architecture. De plus, son design a également été revu afin de répondre
 à la nouvelle problématique du tp, qui était de réaliser une application similaire à Twitter (voir les deux dernières
 images).
@@ -31,12 +31,21 @@ complexité de la tâche, Métacafé n'a pas pu être terminé comme je l'aurais
 intéressant qui m'a permis de découvrir de nouvelles technologies et de nouvelles façons de penser le développement
 d'applications web.
 
-#### Liens
+##### Particularité intéressante
 
-**Dépôt GitHub** (version originale) : [https://github.com/SofianeLasri/metacafe](https://github.com/SofianeLasri/metacafe)
+Le projet a entièrement été conçu avec des images au format Avif (AV1 Image File), un format relativement récent et peu
+supporté par les différents navigateurs web lors de la création du projet. Les images de profil envoyées par les
+utilisateurs sont également convertis dans ce format grâce à la libraire Sharp.
 
-**Dépôt GitHub** (version GraphQL) : [https://github.com/SofianeLasri/metacafe-graphql](https://github.com/SofianeLasri/metacafe-graphql)
+Le choix d'avoir utilisé ce format au profit de webp ou encore png, s'est conforté par sa grande efficacité en terme de
+compression. En effet, les images avif offrent une bien meilleure qualité pour une taille de fichier similaire. Il est
+donc possible d'économiser de la bande passante en réduisant la taille des images compressées, sans perdre en qualité
+par rapport aux autres formats plus anciens.
 
-**Site de démonstation** : [https://metacafe.sl-projects.com](https://metacafe.sl-projects.com)
+##### Liens
+
+- Dépôt GitHub (version originale) : [https://github.com/SofianeLasri/metacafe](https://github.com/SofianeLasri/metacafe)
+- Dépôt GitHub (version GraphQL) : [https://github.com/SofianeLasri/metacafe-graphql](https://github.com/SofianeLasri/metacafe-graphql)
+- Site de démonstation : [https://metacafe.sl-projects.com](https://metacafe.sl-projects.com)
 
 ⚠️ Veillez à ne pas renseigner de données sensibles sur le site de démonstration !

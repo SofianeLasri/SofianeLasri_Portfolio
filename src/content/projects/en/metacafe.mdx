@@ -14,7 +14,7 @@ Métacafé is a project I completed as part of my master's in web development at
 
 Initially designed as a messaging app similar to WhatsApp with VueJS and ExpressJS, I revisited it a few months later
 for a GraphDB lab. The modifications required on the server were so extensive that the project was forked, and the
-server was completely rewritten around the GraphDB framework. The application was kept as a base but was heavily
+server was completely rewritten around the GraphQL framework. The application was kept as a base but was heavily
 modified to meet the new architecture. Additionally, its design was also revamped to address the new lab's objective,
 which was to create an application similar to Twitter (see the last two images).
 
@@ -27,6 +27,16 @@ defined during their registration on the app. However, for various reasons such 
 project's development, and the complexity of the task, Métacafé could not be completed as I would have liked.
 Nonetheless, it remains an interesting project that allowed me to explore new technologies and new ways of thinking
 about web application development.
+
+##### Interesting feature
+
+The project has been entirely made with AVIF pictures (AV1 Image File), a relatively recent format that was not yet
+widely supported by all web browser at the project creation. Profile pictures sent by the users are also converted into
+this format, thankfully to the Sharp library.
+
+The technical choice of using this format against WEBP or PNG, has been made because of its great compression algorithm
+efficiency. Indeed, AVIF pictures offers a better quality for the same file size compared to older formats. So, it is
+possible to save bandwith by reducing pictures file size without lossing quality.
 
 #### Links
 

@@ -213,7 +213,7 @@
         @include project-modal-content-width;
         display: flex;
         flex-direction: column;
-        gap: map.get($spacers, 3);
+        gap: map.get($spacers, 4);
 
         // Overwrite Bootstrap's default styles
         padding: 4rem 0;
