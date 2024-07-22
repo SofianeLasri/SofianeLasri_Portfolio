@@ -49,7 +49,12 @@ const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
                 </button>
                 <div class="project-meta">
                     <div class="logo">
-                        <Picture src={logo} formats={['avif', 'webp']} alt={`Logo du projet ${name}`}/>
+                        {logo.format === "gif" && (
+                                <img src={logo.src}  alt={`Logo du projet ${name}`}/>
+                        )}
+                        {logo.format !== "gif" && (
+                                <Picture src={logo} formats={['avif', 'webp']} alt={`Logo du projet ${name}`}/>
+                        )}
                     </div>
                     <div class="logo-width-faker"></div>
                     <div class="meta">
