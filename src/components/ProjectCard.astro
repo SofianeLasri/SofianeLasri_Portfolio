@@ -6,6 +6,7 @@ import faExpand from "@fortawesome/free-solid-svg-icons/faExpand";
 import FontAwesome from "./FontAwesome.astro";
 import {marked} from "marked";
 
+const thumbWidth = 320;
 const {id, projectType, name, description, body, cover, logo, medias, startDate, endDate} = Astro.props;
 const lang = getLanguage(Astro.preferredLocale);
 const trans = useTranslations(lang);
@@ -15,8 +16,33 @@ const optimizedMedias: any[] = [];
 
 if (medias) {
     for (const media of medias) {
+        if (media.width < thumbWidth && media.height < thumbWidth) {
+            optimizedMedias.push({original: media, thumbnail: media});
+            continue;
+        }
+
+        let newWidth = media.width;
+        let newHeight = media.height;
+
+        if (media.width < thumbWidth) {
+            newWidth = thumbWidth;
+            newHeight = Math.round((thumbWidth / media.width) * media.height);
+        } else if (media.height < thumbWidth) {
+            newHeight = thumbWidth;
+            newWidth = Math.round((thumbWidth / media.height) * media.width);
+        } else {
+            const aspectRatio = media.width / media.height;
+            if (aspectRatio > 1) {
+                newHeight = thumbWidth;
+                newWidth = Math.round(thumbWidth * aspectRatio);
+            } else {
+                newWidth = thumbWidth;
+                newHeight = Math.round(thumbWidth / aspectRatio);
+            }
+        }
+
         const fullSrc = await getImage({src: media, format: 'avif'});
-        const thumbnailSrc = await getImage({src: media, format: 'avif', height: 512});
+        const thumbnailSrc = await getImage({src: media, format: 'avif', width: newWidth, height: newHeight});
         optimizedMedias.push({original: fullSrc, thumbnail: thumbnailSrc});
     }
 }
@@ -50,7 +76,7 @@ const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
                 <div class="project-meta">
                     <div class="logo">
                         {logo.format === "gif" && (
-                                <img src={logo.src}  alt={`Logo du projet ${name}`}/>
+                                <img src={logo.src} alt={`Logo du projet ${name}`}/>
                         )}
                         {logo.format !== "gif" && (
                                 <Picture src={logo} formats={['avif', 'webp']} alt={`Logo du projet ${name}`}/>
@@ -99,11 +125,18 @@ const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
     import 'photoswipe/style.css';
 
     const allProjectModals = document.querySelectorAll('.project-modal');
+    const defaultThumbWidth = 320;
 
     allProjectModals.forEach((modal) => {
-        modal.addEventListener('show.bs.modal', () => {
+        modal.addEventListener('shown.bs.modal', () => {
             const medias = modal.querySelector('.medias');
             if (medias) {
+                const mediaElements = medias.querySelectorAll('.media');
+                mediaElements.forEach((mediaElement: Element) => {
+                    const thumbnail = mediaElement.querySelector('img');
+                    thumbnail.src = adaptThumbnailSizeInUrl(thumbnail.src, mediaElement.getBoundingClientRect().width * window.devicePixelRatio);
+                });
+
                 const lightbox = new PhotoSwipeLightbox({
                     gallery: '#' + medias.id,
                     children: 'a',
@@ -125,4 +158,49 @@ const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
             }
         });
     });
+
+    function adaptThumbnailSizeInUrl(url: string, desiredWith: number): string {
+        if(desiredWith === defaultThumbWidth) {
+            return url;
+        }
+
+        const parsedUrl = new URL(url);
+        const urlParams = new URLSearchParams(parsedUrl.search);
+        const w = urlParams.get('w');
+        const h = urlParams.get('h');
+        const href = urlParams.get('href')
+
+        if (w && h && href) {
+            const hrefParams = new URLSearchParams(href.split('?')[1]);
+            const originalWidth = hrefParams.get('origWidth');
+            const originalHeight = hrefParams.get('origHeight');
+
+            let newWidth: number;
+            let newHeight: number;
+
+            if (originalWidth < desiredWith) {
+                newWidth = desiredWith;
+                newHeight = Math.round((desiredWith / originalWidth) * originalHeight);
+            } else if (originalHeight < desiredWith) {
+                newHeight = desiredWith;
+                newWidth = Math.round((desiredWith / originalHeight) * originalWidth);
+            } else {
+                const aspectRatio = originalWidth / originalHeight;
+                if (aspectRatio > 1) {
+                    newHeight = desiredWith;
+                    newWidth = Math.round(desiredWith * aspectRatio);
+                } else {
+                    newWidth = desiredWith;
+                    newHeight = Math.round(desiredWith / aspectRatio);
+                }
+            }
+
+            urlParams.set('w', newWidth.toString());
+            urlParams.set('h', newHeight.toString());
+
+            parsedUrl.search = urlParams.toString();
+            return parsedUrl.toString();
+        }
+        return url;
+    }
 </script>
