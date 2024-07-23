@@ -46,8 +46,8 @@ if (medias) {
         optimizedMedias.push({original: fullSrc, thumbnail: thumbnailSrc});
     }
 }
-
-const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
+const projectSlug = id.replace(/[^a-zA-Z0-9]/g, '-');
+const modalId = 'modal-' + projectSlug;
 ---
 
 <div class="project-card" data-bs-toggle="modal" data-bs-target={`#${modalId}`}>
@@ -63,7 +63,7 @@ const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
     </div>
 </div>
 
-<div class="modal fade project-modal" id={modalId} tabindex="-1">
+<div class="modal fade project-modal" id={modalId} tabindex="-1" data-project-slug={projectSlug}>
     <div class="modal-dialog modal-dialog-scrollable modal-xl">
         <div class="project-modal-content">
             <div class="modal-header">
@@ -123,18 +123,25 @@ const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
 <script>
     import PhotoSwipeLightbox from "photoswipe/lightbox";
     import 'photoswipe/style.css';
+    import {Modal} from "bootstrap";
 
     const allProjectModals = document.querySelectorAll('.project-modal');
-    const defaultThumbWidth = 320;
 
     allProjectModals.forEach((modal) => {
         modal.addEventListener('shown.bs.modal', () => {
+            const projectSlug = modal.getAttribute('data-project-slug');
             const medias = modal.querySelector('.medias');
+            const url = new URL(window.location.href);
+            const urlParams = new URLSearchParams(url.search);
+            urlParams.set('project', projectSlug);
+            window.history.pushState({}, '', `${url.origin}${url.pathname}?${urlParams.toString()}`);
+
             if (medias) {
                 const mediaElements = medias.querySelectorAll('.media');
                 mediaElements.forEach((mediaElement: Element) => {
                     const thumbnail = mediaElement.querySelector('img');
-                    thumbnail.src = adaptThumbnailSizeInUrl(thumbnail.src, mediaElement.getBoundingClientRect().width * window.devicePixelRatio);
+                    const actualWidth = mediaElement.getBoundingClientRect().width * window.devicePixelRatio;
+                    thumbnail.src = adaptThumbnailSizeInUrl(thumbnail.src, actualWidth);
                 });
 
                 const lightbox = new PhotoSwipeLightbox({
@@ -148,6 +155,12 @@ const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
 
         modal.addEventListener('hidden.bs.modal', () => {
             const medias = modal.querySelector('.medias');
+            const url = new URL(window.location.href);
+            const urlParams = new URLSearchParams(url.search);
+            urlParams.delete('project');
+            const newUrl = urlParams.toString() ? `${url.origin}${url.pathname}?${urlParams.toString()}` : `${url.origin}${url.pathname}`;
+            window.history.pushState({}, '', newUrl);
+
             if (medias) {
                 const lightbox = new PhotoSwipeLightbox({
                     gallery: '#' + medias.id,
@@ -159,39 +172,49 @@ const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
         });
     });
 
-    function adaptThumbnailSizeInUrl(url: string, desiredWith: number): string {
-        if(desiredWith === defaultThumbWidth) {
+    document.addEventListener('DOMContentLoaded', () => {
+        const url = new URL(window.location.href);
+        const urlParams = new URLSearchParams(url.search);
+        const projectSlug = urlParams.get('project');
+        if (projectSlug) {
+            const modal = document.getElementById('modal-' + projectSlug);
+            if (modal) {
+                const modalInstance = new Modal(modal);
+                modalInstance.show();
+            }
+        }
+    });
+
+    function adaptThumbnailSizeInUrl(url: string, desiredWidth: number): string {
+        const defaultThumbWidth = 320;
+
+        if (desiredWidth === defaultThumbWidth) {
             return url;
         }
 
         const parsedUrl = new URL(url);
         const urlParams = new URLSearchParams(parsedUrl.search);
-        const w = urlParams.get('w');
-        const h = urlParams.get('h');
-        const href = urlParams.get('href')
+        const originalWidth = parseInt(urlParams.get('w') || '0', 10);
+        const originalHeight = parseInt(urlParams.get('h') || '0', 10);
 
-        if (w && h && href) {
-            const hrefParams = new URLSearchParams(href.split('?')[1]);
-            const originalWidth = hrefParams.get('origWidth');
-            const originalHeight = hrefParams.get('origHeight');
-
+        if (originalWidth && originalHeight) {
             let newWidth: number;
             let newHeight: number;
 
-            if (originalWidth < desiredWith) {
-                newWidth = desiredWith;
-                newHeight = Math.round((desiredWith / originalWidth) * originalHeight);
-            } else if (originalHeight < desiredWith) {
-                newHeight = desiredWith;
-                newWidth = Math.round((desiredWith / originalHeight) * originalWidth);
+            const aspectRatio = originalWidth / originalHeight;
+            if (originalWidth < desiredWidth) {
+                newWidth = desiredWidth;
+                newHeight = Math.round((desiredWidth / originalWidth) * originalHeight);
+            } else if (originalHeight < desiredWidth) {
+                newHeight = desiredWidth;
+                newWidth = Math.round((desiredWidth / originalHeight) * originalWidth);
             } else {
-                const aspectRatio = originalWidth / originalHeight;
                 if (aspectRatio > 1) {
-                    newHeight = desiredWith;
-                    newWidth = Math.round(desiredWith * aspectRatio);
+                    newHeight = desiredWidth;
+                    newWidth = Math.round(desiredWidth * aspectRatio);
                 } else {
-                    newWidth = desiredWith;
-                    newHeight = Math.round(desiredWith / aspectRatio);
+                    newWidth = desiredWidth;
+                    newHeight = Math.round(desiredWidth / aspectRatio);
                 }
             }
 
