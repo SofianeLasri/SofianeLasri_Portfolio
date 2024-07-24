@@ -6,6 +6,7 @@ import faExpand from "@fortawesome/free-solid-svg-icons/faExpand";
 import FontAwesome from "./FontAwesome.astro";
 import {marked} from "marked";
 
+const thumbWidth = 320;
 const {id, projectType, name, description, body, cover, logo, medias, startDate, endDate} = Astro.props;
 const lang = getLanguage(Astro.preferredLocale);
 const trans = useTranslations(lang);
@@ -15,13 +16,39 @@ const optimizedMedias: any[] = [];
 
 if (medias) {
     for (const media of medias) {
+        if (media.width < thumbWidth && media.height < thumbWidth) {
+            optimizedMedias.push({original: media, thumbnail: media});
+            continue;
+        }
+
+        let newWidth = media.width;
+        let newHeight = media.height;
+
+        if (media.width < thumbWidth) {
+            newWidth = thumbWidth;
+            newHeight = Math.round((thumbWidth / media.width) * media.height);
+        } else if (media.height < thumbWidth) {
+            newHeight = thumbWidth;
+            newWidth = Math.round((thumbWidth / media.height) * media.width);
+        } else {
+            const aspectRatio = media.width / media.height;
+            if (aspectRatio > 1) {
+                newHeight = thumbWidth;
+                newWidth = Math.round(thumbWidth * aspectRatio);
+            } else {
+                newWidth = thumbWidth;
+                newHeight = Math.round(thumbWidth / aspectRatio);
+            }
+        }
+
         const fullSrc = await getImage({src: media, format: 'avif'});
-        const thumbnailSrc = await getImage({src: media, format: 'avif', height: 512});
+        const thumbnailSrc = await getImage({src: media, format: 'avif', width: newWidth, height: newHeight});
         optimizedMedias.push({original: fullSrc, thumbnail: thumbnailSrc});
     }
 }
-
-const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
+const langPrefix = lang + '-';
+const projectSlug = (id.replace(/[^a-zA-Z0-9]/g, '-')).replace(new RegExp(`^${langPrefix}`), '');
+const modalId = 'modal-' + projectSlug;
 ---
 
 <div class="project-card" data-bs-toggle="modal" data-bs-target={`#${modalId}`}>
@@ -37,7 +64,7 @@ const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
     </div>
 </div>
 
-<div class="modal fade project-modal" id={modalId} tabindex="-1">
+<div class="modal fade project-modal" id={modalId} tabindex="-1" data-project-slug={projectSlug}>
     <div class="modal-dialog modal-dialog-scrollable modal-xl">
         <div class="project-modal-content">
             <div class="modal-header">
@@ -49,7 +76,12 @@ const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
                 </button>
                 <div class="project-meta">
                     <div class="logo">
-                        <Picture src={logo} formats={['avif', 'webp']} alt={`Logo du projet ${name}`}/>
+                        {logo.format === "gif" && (
+                                <img src={logo.src} alt={`Logo du projet ${name}`}/>
+                        )}
+                        {logo.format !== "gif" && (
+                                <Picture src={logo} formats={['avif', 'webp']} alt={`Logo du projet ${name}`}/>
+                        )}
                     </div>
                     <div class="logo-width-faker"></div>
                     <div class="meta">
@@ -92,13 +124,27 @@ const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
 <script>
     import PhotoSwipeLightbox from "photoswipe/lightbox";
     import 'photoswipe/style.css';
+    import {Modal} from "bootstrap";
 
     const allProjectModals = document.querySelectorAll('.project-modal');
 
     allProjectModals.forEach((modal) => {
-        modal.addEventListener('show.bs.modal', () => {
+        modal.addEventListener('shown.bs.modal', () => {
+            const projectSlug = modal.getAttribute('data-project-slug');
             const medias = modal.querySelector('.medias');
+            const url = new URL(window.location.href);
+            const urlParams = new URLSearchParams(url.search);
+            urlParams.set('project', projectSlug);
+            window.history.pushState({}, '', `${url.origin}${url.pathname}?${urlParams.toString()}`);
+
             if (medias) {
+                const mediaElements = medias.querySelectorAll('.media');
+                mediaElements.forEach((mediaElement: Element) => {
+                    const thumbnail = mediaElement.querySelector('img');
+                    const actualWidth = mediaElement.getBoundingClientRect().width * window.devicePixelRatio;
+                    thumbnail.src = adaptThumbnailSizeInUrl(thumbnail.src, actualWidth);
+                });
+
                 const lightbox = new PhotoSwipeLightbox({
                     gallery: '#' + medias.id,
                     children: 'a',
@@ -110,6 +156,12 @@ const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
 
         modal.addEventListener('hidden.bs.modal', () => {
             const medias = modal.querySelector('.medias');
+            const url = new URL(window.location.href);
+            const urlParams = new URLSearchParams(url.search);
+            urlParams.delete('project');
+            const newUrl = urlParams.toString() ? `${url.origin}${url.pathname}?${urlParams.toString()}` : `${url.origin}${url.pathname}`;
+            window.history.pushState({}, '', newUrl);
+
             if (medias) {
                 const lightbox = new PhotoSwipeLightbox({
                     gallery: '#' + medias.id,
@@ -120,4 +172,59 @@ const modalId = 'modal-' + id.replace(/[^a-zA-Z0-9]/g, '-');
             }
         });
     });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const url = new URL(window.location.href);
+        const urlParams = new URLSearchParams(url.search);
+        const projectSlug = urlParams.get('project');
+        if (projectSlug) {
+            const modal = document.getElementById('modal-' + projectSlug);
+            if (modal) {
+                const modalInstance = new Modal(modal);
+                modalInstance.show();
+            }
+        }
+    });
+
+    function adaptThumbnailSizeInUrl(url: string, desiredWidth: number): string {
+        const defaultThumbWidth = 320;
+
+        if (desiredWidth === defaultThumbWidth) {
+            return url;
+        }
+
+        const parsedUrl = new URL(url);
+        const urlParams = new URLSearchParams(parsedUrl.search);
+        const originalWidth = parseInt(urlParams.get('w') || '0', 10);
+        const originalHeight = parseInt(urlParams.get('h') || '0', 10);
+
+        if (originalWidth && originalHeight) {
+            let newWidth: number;
+            let newHeight: number;
+
+            const aspectRatio = originalWidth / originalHeight;
+            if (originalWidth < desiredWidth) {
+                newWidth = desiredWidth;
+                newHeight = Math.round((desiredWidth / originalWidth) * originalHeight);
+            } else if (originalHeight < desiredWidth) {
+                newHeight = desiredWidth;
+                newWidth = Math.round((desiredWidth / originalHeight) * originalWidth);
+            } else {
+                if (aspectRatio > 1) {
+                    newHeight = desiredWidth;
+                    newWidth = Math.round(desiredWidth * aspectRatio);
+                } else {
+                    newWidth = desiredWidth;
+                    newHeight = Math.round(desiredWidth / aspectRatio);
+                }
+            }
+
+            urlParams.set('w', newWidth.toString());
+            urlParams.set('h', newHeight.toString());
+
+            parsedUrl.search = urlParams.toString();
+            return parsedUrl.toString();
+        }
+        return url;
+    }
 </script>

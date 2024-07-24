@@ -69,7 +69,7 @@ export const ui = {
         'nav.education-career': 'Éducation & Carrière',
         'nav.contact': 'Contact',
         'hero.welcome': 'Bienvenue sur mon site',
-        'hero.title': 'Salut! Je suis',
+        'hero.title': 'Salut ! Je suis',
         'hero.subtitle': 'Développeur Full-Stack',
         'about-me.part1': 'Passionné par le développement d’applications, j’adore créer de nouveaux projets afin d’expérimenter de nouvelles technologies. J’aime également concevoir et réaliser des interfaces graphiques, j’attribue toujours beaucoup de mérite aux sites et applications à l’UI/UX soignée.',
         'about-me.part2': 'Grâce à mon expérience acquise en entreprise, mais également au travers de mes divers projets personnels, je possède une bonne maîtrise de Laravel, TypeScript et de Sass. :)',
