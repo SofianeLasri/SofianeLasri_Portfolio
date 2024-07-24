@@ -41,9 +41,28 @@ if (medias) {
             }
         }
 
-        const fullSrc = await getImage({src: media, format: 'avif'});
+        let fullSrc = {
+            src: media.src,
+            width: media.width,
+            height: media.height
+        };
+        if (media.format !== 'avif') {
+            let convertedImage = await getImage({src: media, format: 'avif'});
+            fullSrc = {
+                src: convertedImage.src,
+                width: convertedImage.rawOptions.src.width,
+                height: convertedImage.rawOptions.src.height
+            }
+        }
         const thumbnailSrc = await getImage({src: media, format: 'avif', width: newWidth, height: newHeight});
-        optimizedMedias.push({original: fullSrc, thumbnail: thumbnailSrc});
+        optimizedMedias.push({
+            original: fullSrc,
+            thumbnail: {
+                src: thumbnailSrc.src,
+                width: thumbnailSrc.rawOptions.src.width,
+                height: thumbnailSrc.rawOptions.src.height
+            }
+        });
     }
 }
 const langPrefix = lang + '-';
@@ -101,8 +120,8 @@ const modalId = 'modal-' + projectSlug;
                             <div class="medias" id={`medias-${modalId}`}>
                                 {optimizedMedias.map((media) => (
                                         <a href={media.original.src}
-                                           data-pswp-width={media.original.rawOptions.src.width}
-                                           data-pswp-height={media.original.rawOptions.src.height}
+                                           data-pswp-width={media.original.width}
+                                           data-pswp-height={media.original.height}
                                            target="_blank"
                                            class="media">
                                             <img src={media.thumbnail.src} alt=""/>
