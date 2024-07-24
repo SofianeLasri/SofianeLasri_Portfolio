@@ -11,6 +11,8 @@ export default defineConfig({
     defaultLocale: "fr",
     locales: ["fr", "en"]
   },
-  adapter: vercel(),
+  adapter: vercel({
+    webAnalytics: { enabled: true }
+  }),
   integrations: [mdx(), vue()]
 });
