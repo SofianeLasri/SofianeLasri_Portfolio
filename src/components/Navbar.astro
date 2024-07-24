@@ -34,7 +34,7 @@ const trans = useTranslations(lang);
 <script>
     const body: HTMLElement = document.getElementsByTagName("body")[0];
     const mobileNavbarThreshold = 900;
-    const navLinks: HTMLElement = document.getElementById("nav-links");
+    const navLinks: HTMLElement = document.getElementById("nav-links")!;
     const navLinksChilds: HTMLCollectionOf<HTMLLIElement> = navLinks.getElementsByTagName("li");
     const mobileNavBtn: HTMLButtonElement = document.getElementById("mobile-nav-btn") as HTMLButtonElement;
 

@@ -18,7 +18,10 @@ const lang = getLanguage(Astro.preferredLocale);
 const trans = useTranslations(lang);
 
 const allSoftSkills = await getEntry('soft-skills', lang + '/soft-skills')
-    .then((entry) => entry.data);
+    .then((entry) => function () {
+        if (!entry) return {};
+        return entry.data;
+    });
 
 const allTechnologies = await getCollection('technologies');
 
