@@ -47,7 +47,7 @@ Le projet Laravel étant désormais créé et en bonne voie, je me suis dit qu'i
 panneau d'administration qui pourrait me permettre de gérer le contenu du site.
 
 Car c'est vrai que sur VBcms 2, je n'avais plus vraiment à me soucier de cette partie. Le framework, s'apparentant 
-d'avantage à un cms qu'à un framework, me permettait de gérer le contenu de manière très simple depuis l'interface
+d'avantage à un cms, me permettait de gérer le contenu de manière très simple depuis l'interface
 d'administration. Pas d'authentification à gérer, système de permission embarqué et surtout pas d'interface admin à 
 développer, tout était déjà prêt (ou presque). 
 
@@ -64,12 +64,38 @@ travailler autant qu'auparavant sur VBcms 2 en raison de mon alternance, les tem
 explosé.
 
 Par exemple, il m'a fallu plusieurs mois pour simplement rendre fonctionnelle l'authentification sur le projet avec les
-différents sous domaines liés. J'ai également passé un temps fou à développer la médiathèque, qui devait permettre 
-d'envoyer des fichiers sur le site afin de les utiliser pour la création d'articles de blogs, ou encore de pages de 
-projets.
+différents sous domaines liés (quelque chose que ne supporte pas nativement Laravel). J'ai également passé un temps fou 
+à développer la médiathèque, qui devait permettre d'envoyer des fichiers sur le site afin de les utiliser pour la 
+création d'articles de blogs, ou encore de pages de projets.
 
 Toutefois, je ne regrette pas le temps passé dessus. Ce projet m'a été bénéfique sur bien des aspects.
 
 ##### Un projet riche en enseignements
 
-Tout d'abord, c'est le premier projet que j'ai réalisé en utilisant un framework. 
+Tout d'abord, c'est le premier projet que j'ai réalisé en utilisant un framework. J'ai appris énormément de choses, et 
+cela m'a permis de me forger une réelle expérience sur Laravel. Ayant touché à pratiquement tous les aspects du
+framework, je connais désormais l'ensemble des fonctionnalités qu'il propose. 
+
+Enfin, le travail effectué sur ce projet n'est pas entièrement à jeter. En effet, à l'avenir je réutiliserai 
+l'interface admin que j'ai développée pour d'autres projets. Son design système est assez complet et permet de réaliser 
+toutes sortes d'interfaces.
+
+##### Fonctionnalités intéressantes
+
+- Authentification multi-domaine (même si non terminée)
+- Enregistrement de toutes les requêtes HTTP en base
+- Gestion assez poussée des fichiers
+  - Upload de fichiers
+  - Gestionnaire de fichiers / Médiathèque
+  - Conversion automatique des images en différentes tailles au format WebP
+- Système de notifications (sans le centre de notifications)
+- Entièrement responsive (utilisable sur mobile)
+
+J'aurais aimé implémenter un système de permissions, mais, étant le seul utilisateur du site, j'ai toujours reporté le 
+développement de cette fonctionnalité à plus tard.
+
+##### Liens
+
+- Dépôt GitHub : [https://github.com/SofianeLasri/SL-Projects-Website](https://github.com/SofianeLasri/SL-Projects-Website)
+- Maquette Figma (Vitrine) : [https://www.figma.com/design/...](https://www.figma.com/design/MHphZL3q3WvFzRsWdKh4ly/Site-internet)
+- Maquette Figma (Dashboard) : [https://www.figma.com/design/...](https://www.figma.com/design/v1QLtDeZhDOC0b85crsVx8/Dashboard)

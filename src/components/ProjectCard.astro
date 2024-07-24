@@ -46,7 +46,8 @@ if (medias) {
         optimizedMedias.push({original: fullSrc, thumbnail: thumbnailSrc});
     }
 }
-const projectSlug = id.replace(/[^a-zA-Z0-9]/g, '-');
+const langPrefix = lang + '-';
+const projectSlug = (id.replace(/[^a-zA-Z0-9]/g, '-')).replace(new RegExp(`^${langPrefix}`), '');
 const modalId = 'modal-' + projectSlug;
 ---
 
