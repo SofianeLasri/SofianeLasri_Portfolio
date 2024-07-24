@@ -1,10 +1,11 @@
 ---
 import {Picture} from 'astro:assets';
+import {ImageMetadata} from "astro";
 
 export interface Props {
     name: string;
     description: string;
-    logo: any;
+    logo: ImageMetadata;
     startDate: string;
     endDate: string;
 }

@@ -1,6 +1,15 @@
 ---
-import { marked } from 'marked';
 import {Picture} from 'astro:assets';
+import {marked} from 'marked';
+import {ImageMetadata} from "astro";
+
+export interface Props {
+    isPrimary: boolean;
+    technoType: string;
+    logo: ImageMetadata;
+    name: string;
+    review: string;
+}
 const {isPrimary, technoType, logo, name, review} = Astro.props;
 
 const reviewHtml = marked(review);
@@ -13,7 +22,7 @@ const reviewHtml = marked(review);
         <div class="techno-header">
             <div class="logo">
                 <!--<Fragment set:html={logo}/>-->
-                <Picture src={logo} alt={name} />
+                <Picture src={logo} alt={name}/>
             </div>
             <div class="name">{name}</div>
         </div>
