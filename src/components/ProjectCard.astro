@@ -15,7 +15,7 @@ export interface Props {
     body: string;
     cover: ImageMetadata;
     logo: ImageMetadata;
-    medias: ImageMetadata[]|undefined;
+    medias: ImageMetadata[] | undefined;
     startDate: string;
     endDate: string;
 }
@@ -28,69 +28,76 @@ const formattedBody = marked(body);
 const optimizedMedias: any[] = [];
 const thumbWidth = 320;
 
-if (medias) {
-    for (const media of medias) {
-        console.log(media)
-        if (media.width < thumbWidth && media.height < thumbWidth) {
-            optimizedMedias.push({original: media, thumbnail: media});
-            continue;
-        }
+function calculateNewDimensions(media: ImageMetadata, thumbWidth: number) {
+    let { width, height } = media;
+    const aspectRatio = width / height;
 
-        let newWidth = media.width;
-        let newHeight = media.height;
-
-        if (media.width < thumbWidth) {
-            newWidth = thumbWidth;
-            newHeight = Math.round((thumbWidth / media.width) * media.height);
-        } else if (media.height < thumbWidth) {
-            newHeight = thumbWidth;
-            newWidth = Math.round((thumbWidth / media.height) * media.width);
-        } else {
-            const aspectRatio = media.width / media.height;
-            if (aspectRatio > 1) {
-                newHeight = thumbWidth;
-                newWidth = Math.round(thumbWidth * aspectRatio);
-            } else {
-                newWidth = thumbWidth;
-                newHeight = Math.round(thumbWidth / aspectRatio);
-            }
-        }
-
-        let fullSrc = {
-            src: media.src,
-            width: media.width,
-            height: media.height
-        };
-
-        if (media.format !== 'avif') {
-            const convertedImage: GetImageResult = await getImage({src: media, format: 'avif'});
-            const convertedImageMetadata: ImageMetadata = convertedImage.rawOptions.src as ImageMetadata;
-
-            fullSrc = {
-                src: convertedImage.src,
-                width: convertedImageMetadata.width,
-                height: convertedImageMetadata.height
-            }
-        }
-
-        const thumbnailSrc: GetImageResult = await getImage({
-            src: media,
-            format: 'avif',
-            width: newWidth,
-            height: newHeight
-        });
-        const thumbnailSrcMetadata: ImageMetadata = thumbnailSrc.rawOptions.src as ImageMetadata;
-
-        optimizedMedias.push({
-            original: fullSrc,
-            thumbnail: {
-                src: thumbnailSrc.src,
-                width: thumbnailSrcMetadata.width,
-                height: thumbnailSrcMetadata.height
-            }
-        });
+    if (width < thumbWidth && height < thumbWidth) {
+        return { newWidth: width, newHeight: height };
     }
+
+    if (width < thumbWidth) {
+        width = thumbWidth;
+        height = Math.round((thumbWidth / media.width) * media.height);
+    } else if (height < thumbWidth) {
+        height = thumbWidth;
+        width = Math.round((thumbWidth / media.height) * media.width);
+    } else {
+        if (aspectRatio > 1) {
+            height = thumbWidth;
+            width = Math.round(thumbWidth * aspectRatio);
+        } else {
+            width = thumbWidth;
+            height = Math.round(thumbWidth / aspectRatio);
+        }
+    }
+
+    return { newWidth: width, newHeight: height };
 }
+
+async function optimizeMedia(media: ImageMetadata) {
+    const { newWidth, newHeight } = calculateNewDimensions(media, thumbWidth);
+
+    let fullSrc = {
+        src: media.src,
+        width: media.width,
+        height: media.height
+    };
+
+    if (media.format !== 'avif') {
+        const convertedImage: GetImageResult = await getImage({ src: media, format: 'avif' });
+        const convertedImageMetadata: ImageMetadata = convertedImage.rawOptions.src as ImageMetadata;
+
+        fullSrc = {
+            src: convertedImage.src,
+            width: convertedImageMetadata.width,
+            height: convertedImageMetadata.height
+        };
+    }
+
+    const thumbnailSrc: GetImageResult = await getImage({
+        src: media,
+        format: 'avif',
+        width: newWidth,
+        height: newHeight
+    });
+    const thumbnailSrcMetadata: ImageMetadata = thumbnailSrc.rawOptions.src as ImageMetadata;
+
+    return {
+        original: fullSrc,
+        thumbnail: {
+            src: thumbnailSrc.src,
+            width: thumbnailSrcMetadata.width,
+            height: thumbnailSrcMetadata.height
+        }
+    };
+}
+
+if (medias) {
+    const optimizedMediaPromises = medias.map(optimizeMedia);
+    optimizedMedias.push(...await Promise.all(optimizedMediaPromises));
+}
+
 const langPrefix = lang + '-';
 const projectSlug = (id.replace(/[^a-zA-Z0-9]/g, '-')).replace(new RegExp(`^${langPrefix}`), '');
 const modalId = 'modal-' + projectSlug;
@@ -169,69 +176,21 @@ const modalId = 'modal-' + projectSlug;
 <script>
     import PhotoSwipeLightbox from "photoswipe/lightbox";
     import 'photoswipe/style.css';
-    import {Modal} from "bootstrap";
+    import { Modal } from "bootstrap";
 
-    const allProjectModals = document.querySelectorAll('.project-modal');
+    const lightboxInstances = new Map();
 
-    allProjectModals.forEach((modal) => {
-        modal.addEventListener('shown.bs.modal', () => {
-            const projectSlug: string = modal.getAttribute('data-project-slug') || '';
-            const medias = modal.querySelector('.medias');
-            const url = new URL(window.location.href);
-            const urlParams = new URLSearchParams(url.search);
-            urlParams.set('project', projectSlug);
-            window.history.pushState({}, '', `${url.origin}${url.pathname}?${urlParams.toString()}`);
-
-            if (medias) {
-                const mediaElements = medias.querySelectorAll('.media');
-                mediaElements.forEach((mediaElement: Element) => {
-                    const thumbnail: HTMLImageElement = mediaElement.querySelector('img')!;
-                    const actualWidth: number = mediaElement.getBoundingClientRect().width * window.devicePixelRatio;
-                    thumbnail.src = adaptThumbnailSizeInUrl(thumbnail.src, actualWidth);
-                });
-
-                const lightbox = new PhotoSwipeLightbox({
-                    gallery: '#' + medias.id,
-                    children: 'a',
-                    pswpModule: () => import('photoswipe')
-                });
-                lightbox.init();
-            }
+    function initPhotoSwipeLightbox(medias) {
+        const lightbox = new PhotoSwipeLightbox({
+            gallery: `#${medias.id}`,
+            children: 'a',
+            pswpModule: () => import('photoswipe')
         });
+        lightbox.init();
+        return lightbox;
+    }
 
-        modal.addEventListener('hidden.bs.modal', () => {
-            const medias = modal.querySelector('.medias');
-            const url = new URL(window.location.href);
-            const urlParams = new URLSearchParams(url.search);
-            urlParams.delete('project');
-            const newUrl = urlParams.toString() ? `${url.origin}${url.pathname}?${urlParams.toString()}` : `${url.origin}${url.pathname}`;
-            window.history.pushState({}, '', newUrl);
-
-            if (medias) {
-                const lightbox = new PhotoSwipeLightbox({
-                    gallery: '#' + medias.id,
-                    children: 'a',
-                    pswpModule: () => import('photoswipe')
-                });
-                lightbox.destroy();
-            }
-        });
-    });
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const url = new URL(window.location.href);
-        const urlParams = new URLSearchParams(url.search);
-        const projectSlug = urlParams.get('project');
-        if (projectSlug) {
-            const modal = document.getElementById('modal-' + projectSlug);
-            if (modal) {
-                const modalInstance = new Modal(modal);
-                modalInstance.show();
-            }
-        }
-    });
-
-    function adaptThumbnailSizeInUrl(url: string, desiredWidth: number): string {
+    function adaptThumbnailSizeInUrl(url, desiredWidth) {
         const defaultThumbWidth = 320;
 
         if (desiredWidth === defaultThumbWidth) {
@@ -244,10 +203,9 @@ const modalId = 'modal-' + projectSlug;
         const originalHeight = parseInt(urlParams.get('h') || '0', 10);
 
         if (originalWidth && originalHeight) {
-            let newWidth: number;
-            let newHeight: number;
-
+            let newWidth, newHeight;
             const aspectRatio = originalWidth / originalHeight;
+
             if (originalWidth < desiredWidth) {
                 newWidth = desiredWidth;
                 newHeight = Math.round((desiredWidth / originalWidth) * originalHeight);
@@ -266,10 +224,73 @@ const modalId = 'modal-' + projectSlug;
 
             urlParams.set('w', newWidth.toString());
             urlParams.set('h', newHeight.toString());
-
             parsedUrl.search = urlParams.toString();
             return parsedUrl.toString();
         }
         return url;
     }
+
+    function updateUrlParams(slug, add = true) {
+        const url = new URL(window.location.href);
+        const urlParams = new URLSearchParams(url.search);
+        if (add) {
+            urlParams.set('project', slug);
+        } else {
+            urlParams.delete('project');
+        }
+        const newUrl = urlParams.toString() ? `${url.origin}${url.pathname}?${urlParams.toString()}` : `${url.origin}${url.pathname}`;
+        window.history.pushState({}, '', newUrl);
+    }
+
+    function initializeModals() {
+        const allProjectModals = document.querySelectorAll('.project-modal');
+
+        allProjectModals.forEach((modal) => {
+            modal.addEventListener('shown.bs.modal', () => {
+                const projectSlug = modal.getAttribute('data-project-slug') || '';
+                updateUrlParams(projectSlug);
+
+                const medias = modal.querySelector('.medias');
+                if (medias) {
+                    const mediaElements = medias.querySelectorAll('.media');
+                    mediaElements.forEach((mediaElement) => {
+                        const thumbnail = mediaElement.querySelector('img')!;
+                        const actualWidth = mediaElement.getBoundingClientRect().width * window.devicePixelRatio;
+                        thumbnail.src = adaptThumbnailSizeInUrl(thumbnail.src, actualWidth);
+                    });
+
+                    const lightbox = initPhotoSwipeLightbox(medias);
+                    lightboxInstances.set(modal.id, lightbox);
+                }
+            });
+
+            modal.addEventListener('hidden.bs.modal', () => {
+                updateUrlParams('', false);
+
+                const lightbox = lightboxInstances.get(modal.id);
+                if (lightbox) {
+                    lightbox.destroy();
+                    lightboxInstances.delete(modal.id);
+                }
+            });
+        });
+    }
+
+    function showModalFromUrl() {
+        const url = new URL(window.location.href);
+        const urlParams = new URLSearchParams(url.search);
+        const projectSlug = urlParams.get('project');
+        if (projectSlug) {
+            const modal = document.getElementById('modal-' + projectSlug);
+            if (modal) {
+                const modalInstance = new Modal(modal);
+                modalInstance.show();
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeModals();
+        showModalFromUrl();
+    });
 </script>
