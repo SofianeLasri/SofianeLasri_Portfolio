@@ -151,13 +151,13 @@ const modalId = 'modal-' + projectSlug;
                         <div class="section">
                             <h4>{trans('medias')}</h4>
                             <div class="medias" id={`medias-${modalId}`}>
-                                {optimizedMedias.map((media) => (
-                                        <a href={media.original.src}
-                                           data-pswp-width={media.original.width}
-                                           data-pswp-height={media.original.height}
+                                {medias.map((media) => (
+                                        <a href={media.src}
+                                           data-pswp-width={media.width}
+                                           data-pswp-height={media.height}
                                            target="_blank"
                                            class="media">
-                                            <img src={media.thumbnail.src} alt="" loading="lazy" decoding="async"/>
+                                            <Picture src={media} formats={['avif', 'webp']} alt="" quality="mid"/>
                                             <div class="overlay">
                                                 <div class="icon">
                                                     <FontAwesome icon={faExpand}/>
@@ -190,8 +190,9 @@ const modalId = 'modal-' + projectSlug;
         return lightbox;
     }
 
-    function adaptThumbnailSizeInUrl(url, desiredWidth) {
+    function adaptThumbnailSizeInUrl(url, desiredWidth: number, originalWidth: number, originalHeight: number) {
         const defaultThumbWidth = 320;
+        console.log("Adapting thumbnail size", url, desiredWidth)
 
         if (desiredWidth === defaultThumbWidth) {
             return url;
@@ -199,8 +200,6 @@ const modalId = 'modal-' + projectSlug;
 
         const parsedUrl = new URL(url);
         const urlParams = new URLSearchParams(parsedUrl.search);
-        const originalWidth = parseInt(urlParams.get('w') || '0', 10);
-        const originalHeight = parseInt(urlParams.get('h') || '0', 10);
 
         if (originalWidth && originalHeight) {
             let newWidth, newHeight;
@@ -223,8 +222,9 @@ const modalId = 'modal-' + projectSlug;
             }
 
             urlParams.set('w', newWidth.toString());
-            urlParams.set('h', newHeight.toString());
+            // urlParams.set('h', newHeight.toString()); // Not needed anymore with Vercel Image Optimizer
             parsedUrl.search = urlParams.toString();
+            console.log("Adapted URL", parsedUrl.toString());
             return parsedUrl.toString();
         }
         return url;
@@ -254,9 +254,11 @@ const modalId = 'modal-' + projectSlug;
                 if (medias) {
                     const mediaElements = medias.querySelectorAll('.media');
                     mediaElements.forEach((mediaElement) => {
+                        const pictureOrignalWidth: number = parseInt(mediaElement.getAttribute('data-pswp-width') || '0', 10);
+                        const pictureOrignalHeight: number = parseInt(mediaElement.getAttribute('data-pswp-height') || '0', 10);
                         const thumbnail = mediaElement.querySelector('img')!;
-                        const actualWidth = mediaElement.getBoundingClientRect().width * window.devicePixelRatio;
-                        thumbnail.src = adaptThumbnailSizeInUrl(thumbnail.src, actualWidth);
+                        const actualWidth: number = mediaElement.getBoundingClientRect().width * window.devicePixelRatio;
+                        //thumbnail.src = adaptThumbnailSizeInUrl(thumbnail.src, actualWidth, pictureOrignalWidth, pictureOrignalHeight);
                     });
 
                     const lightbox = initPhotoSwipeLightbox(medias);
