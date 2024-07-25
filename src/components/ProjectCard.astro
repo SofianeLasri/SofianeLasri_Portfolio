@@ -29,11 +29,11 @@ const optimizedMedias: any[] = [];
 const thumbWidth = 320;
 
 function calculateNewDimensions(media: ImageMetadata, thumbWidth: number) {
-    let { width, height } = media;
+    let {width, height} = media;
     const aspectRatio = width / height;
 
     if (width < thumbWidth && height < thumbWidth) {
-        return { newWidth: width, newHeight: height };
+        return {newWidth: width, newHeight: height};
     }
 
     if (width < thumbWidth) {
@@ -52,11 +52,11 @@ function calculateNewDimensions(media: ImageMetadata, thumbWidth: number) {
         }
     }
 
-    return { newWidth: width, newHeight: height };
+    return {newWidth: width, newHeight: height};
 }
 
 async function optimizeMedia(media: ImageMetadata) {
-    const { newWidth, newHeight } = calculateNewDimensions(media, thumbWidth);
+    const {newWidth, newHeight} = calculateNewDimensions(media, thumbWidth);
 
     let fullSrc = {
         src: media.src,
@@ -65,7 +65,7 @@ async function optimizeMedia(media: ImageMetadata) {
     };
 
     if (media.format !== 'avif') {
-        const convertedImage: GetImageResult = await getImage({ src: media, format: 'avif' });
+        const convertedImage: GetImageResult = await getImage({src: media, format: 'avif'});
         const convertedImageMetadata: ImageMetadata = convertedImage.rawOptions.src as ImageMetadata;
 
         fullSrc = {
@@ -157,7 +157,7 @@ const modalId = 'modal-' + projectSlug;
                                            data-pswp-height={media.original.height}
                                            target="_blank"
                                            class="media">
-                                            <img src={media.thumbnail.src} alt=""/>
+                                            <img src={media.thumbnail.src} alt="" loading="lazy" decoding="async"/>
                                             <div class="overlay">
                                                 <div class="icon">
                                                     <FontAwesome icon={faExpand}/>
@@ -176,7 +176,7 @@ const modalId = 'modal-' + projectSlug;
 <script>
     import PhotoSwipeLightbox from "photoswipe/lightbox";
     import 'photoswipe/style.css';
-    import { Modal } from "bootstrap";
+    import {Modal} from "bootstrap";
 
     const lightboxInstances = new Map();
 

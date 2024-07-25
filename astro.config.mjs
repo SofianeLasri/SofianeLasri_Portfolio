@@ -12,7 +12,8 @@ export default defineConfig({
     locales: ["fr", "en"]
   },
   adapter: vercel({
-    webAnalytics: { enabled: true }
+    webAnalytics: { enabled: true },
+    imageService: true,
   }),
   integrations: [mdx(), vue()]
 });
