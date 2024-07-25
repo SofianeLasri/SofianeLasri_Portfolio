@@ -14,6 +14,11 @@ export default defineConfig({
   adapter: vercel({
     webAnalytics: { enabled: true },
     imageService: true,
+    imagesConfig: {
+      sizes: [320, 400, 640, 1280],
+      formats: ["image/avif", "image/webp"],
+      domains: [],
+    },
   }),
   integrations: [mdx(), vue()]
 });
