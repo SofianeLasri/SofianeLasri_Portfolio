@@ -25,78 +25,6 @@ const lang = getLanguage(Astro.preferredLocale);
 const trans = useTranslations(lang);
 const translatedProjectType = trans('project-type.' + projectType);
 const formattedBody = marked(body);
-const optimizedMedias: any[] = [];
-const thumbWidth = 320;
-
-function calculateNewDimensions(media: ImageMetadata, thumbWidth: number) {
-    let {width, height} = media;
-    const aspectRatio = width / height;
-
-    if (width < thumbWidth && height < thumbWidth) {
-        return {newWidth: width, newHeight: height};
-    }
-
-    if (width < thumbWidth) {
-        width = thumbWidth;
-        height = Math.round((thumbWidth / media.width) * media.height);
-    } else if (height < thumbWidth) {
-        height = thumbWidth;
-        width = Math.round((thumbWidth / media.height) * media.width);
-    } else {
-        if (aspectRatio > 1) {
-            height = thumbWidth;
-            width = Math.round(thumbWidth * aspectRatio);
-        } else {
-            width = thumbWidth;
-            height = Math.round(thumbWidth / aspectRatio);
-        }
-    }
-
-    return {newWidth: width, newHeight: height};
-}
-
-async function optimizeMedia(media: ImageMetadata) {
-    const {newWidth, newHeight} = calculateNewDimensions(media, thumbWidth);
-
-    let fullSrc = {
-        src: media.src,
-        width: media.width,
-        height: media.height
-    };
-
-    if (media.format !== 'avif') {
-        const convertedImage: GetImageResult = await getImage({src: media, format: 'avif'});
-        const convertedImageMetadata: ImageMetadata = convertedImage.rawOptions.src as ImageMetadata;
-
-        fullSrc = {
-            src: convertedImage.src,
-            width: convertedImageMetadata.width,
-            height: convertedImageMetadata.height
-        };
-    }
-
-    const thumbnailSrc: GetImageResult = await getImage({
-        src: media,
-        format: 'avif',
-        width: newWidth,
-        height: newHeight
-    });
-    const thumbnailSrcMetadata: ImageMetadata = thumbnailSrc.rawOptions.src as ImageMetadata;
-
-    return {
-        original: fullSrc,
-        thumbnail: {
-            src: thumbnailSrc.src,
-            width: thumbnailSrcMetadata.width,
-            height: thumbnailSrcMetadata.height
-        }
-    };
-}
-
-if (medias) {
-    const optimizedMediaPromises = medias.map(optimizeMedia);
-    optimizedMedias.push(...await Promise.all(optimizedMediaPromises));
-}
 
 const langPrefix = lang + '-';
 const projectSlug = (id.replace(/[^a-zA-Z0-9]/g, '-')).replace(new RegExp(`^${langPrefix}`), '');
@@ -190,46 +118,6 @@ const modalId = 'modal-' + projectSlug;
         return lightbox;
     }
 
-    function adaptThumbnailSizeInUrl(url, desiredWidth: number, originalWidth: number, originalHeight: number) {
-        const defaultThumbWidth = 320;
-        console.log("Adapting thumbnail size", url, desiredWidth)
-
-        if (desiredWidth === defaultThumbWidth) {
-            return url;
-        }
-
-        const parsedUrl = new URL(url);
-        const urlParams = new URLSearchParams(parsedUrl.search);
-
-        if (originalWidth && originalHeight) {
-            let newWidth, newHeight;
-            const aspectRatio = originalWidth / originalHeight;
-
-            if (originalWidth < desiredWidth) {
-                newWidth = desiredWidth;
-                newHeight = Math.round((desiredWidth / originalWidth) * originalHeight);
-            } else if (originalHeight < desiredWidth) {
-                newHeight = desiredWidth;
-                newWidth = Math.round((desiredWidth / originalHeight) * originalWidth);
-            } else {
-                if (aspectRatio > 1) {
-                    newHeight = desiredWidth;
-                    newWidth = Math.round(desiredWidth * aspectRatio);
-                } else {
-                    newWidth = desiredWidth;
-                    newHeight = Math.round(desiredWidth / aspectRatio);
-                }
-            }
-
-            urlParams.set('w', newWidth.toString());
-            // urlParams.set('h', newHeight.toString()); // Not needed anymore with Vercel Image Optimizer
-            parsedUrl.search = urlParams.toString();
-            console.log("Adapted URL", parsedUrl.toString());
-            return parsedUrl.toString();
-        }
-        return url;
-    }
-
     function updateUrlParams(slug, add = true) {
         const url = new URL(window.location.href);
         const urlParams = new URLSearchParams(url.search);
@@ -252,15 +140,6 @@ const modalId = 'modal-' + projectSlug;
 
                 const medias = modal.querySelector('.medias');
                 if (medias) {
-                    const mediaElements = medias.querySelectorAll('.media');
-                    mediaElements.forEach((mediaElement) => {
-                        const pictureOrignalWidth: number = parseInt(mediaElement.getAttribute('data-pswp-width') || '0', 10);
-                        const pictureOrignalHeight: number = parseInt(mediaElement.getAttribute('data-pswp-height') || '0', 10);
-                        const thumbnail = mediaElement.querySelector('img')!;
-                        const actualWidth: number = mediaElement.getBoundingClientRect().width * window.devicePixelRatio;
-                        //thumbnail.src = adaptThumbnailSizeInUrl(thumbnail.src, actualWidth, pictureOrignalWidth, pictureOrignalHeight);
-                    });
-
                     const lightbox = initPhotoSwipeLightbox(medias);
                     lightboxInstances.set(modal.id, lightbox);
                 }
