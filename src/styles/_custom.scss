@@ -49,3 +49,23 @@ html {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+.loading-gradient {
+    animation-duration: 1.8s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeHolderShimmer;
+    animation-timing-function: linear;
+    background: $gray-100;
+    background: linear-gradient(to right, $gray-100 8%, $gray-200 38%, $gray-100 54%);
+    background-size: 1000px 640px;
+}
+
+@keyframes placeHolderShimmer{
+    0%{
+        background-position: -468px 0
+    }
+    100%{
+        background-position: 468px 0
+    }
+}

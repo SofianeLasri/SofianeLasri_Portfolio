@@ -24,6 +24,7 @@
         width: 100%;
 
         picture {
+            @extend .loading-gradient;
             height: 17rem;
             width: 100%;
 
@@ -124,6 +125,7 @@
         overflow: hidden;
 
         .background-image {
+            @extend .loading-gradient;
             height: 25rem;
             width: 100%;
 
@@ -176,6 +178,7 @@
             position: relative;
 
             .logo {
+                @extend .loading-gradient;
                 $logo-border-radius: .125rem;
                 position: absolute;
                 width: 10rem;
@@ -232,6 +235,7 @@
             padding-bottom: map.get($spacers, 3);
 
             .media {
+                @extend .loading-gradient;
                 width: 20rem;
                 height: 20rem;
                 border-radius: $border-radius;
