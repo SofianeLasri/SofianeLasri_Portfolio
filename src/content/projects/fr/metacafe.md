@@ -3,14 +3,14 @@ category: 'web'
 name: Métacafé
 description: Application de type réseau social développée avec VueJS à l’occasion d’un projet scolaire.
 usedTechnologies: [ 'typescript', 'vuejs', 'sass', 'sequelize', 'express' ]
-cover: ../assets/metacafe/metacafe-cover.png
+cover: ../assets/metacafe/metacafe-cover.avif
 logo: ../assets/metacafe/square-logo-with-background.avif
-medias: [ '../assets/metacafe/presentation1.png',
-          '../assets/metacafe/presentation2.png',
-          '../assets/metacafe/screenshot1.png',
-          '../assets/metacafe/screenshot2.jpg',
-          '../assets/metacafe/maquette-v2_2.png',
-          '../assets/metacafe/maquette-v2_1.png', ]
+medias: [ '../assets/metacafe/presentation1.avif',
+          '../assets/metacafe/presentation2.avif',
+          '../assets/metacafe/screenshot1.avif',
+          '../assets/metacafe/screenshot2.avif',
+          '../assets/metacafe/maquette-v2_2.avif',
+          '../assets/metacafe/maquette-v2_1.avif', ]
 startDate: 2024-09-01
 endDate: 2024-07-01
 ---

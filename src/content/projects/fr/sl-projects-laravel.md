@@ -18,7 +18,7 @@ medias: [
   '../assets/sl-projects-laravel/dashboard-6-send-media.avif',
   '../assets/sl-projects-laravel/dashboard-6-media-infos.avif',
   '../assets/sl-projects-laravel/dashboard-6-modal.avif',
-  '../assets/sl-projects-laravel/dashboard-6-create-project.png',
+  '../assets/sl-projects-laravel/dashboard-6-create-project.avif',
   '../assets/sl-projects-laravel/dashboard-6-notifications.avif',
   '../assets/sl-projects-laravel/trello-board.avif']
 startDate: 2022-08-09

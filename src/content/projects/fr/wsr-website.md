@@ -3,13 +3,13 @@ category: 'web'
 name: Site internet des WSR
 description: Projet scolaire impliquant la création d'un site internet avec le framework Django.
 usedTechnologies: [ 'python', 'django', 'sass' ]
-cover: ../assets/wsr-website/cover.jpg
-logo: ../assets/wsr-website/favicon.png
-medias: [ '../assets/wsr-website/accueil.png', '../assets/wsr-website/login.jpg' ]
+cover: ../assets/wsr-website/cover.avif
+logo: ../assets/wsr-website/favicon.avif
+medias: [ '../assets/wsr-website/accueil.avif', '../assets/wsr-website/login.avif' ]
 videos: [
   {
     src: 'https://cloud.sl-projects.com/index.php/s/4Jq8iBoHFjnpsxd/download',
-    cover: '../assets/wsr-website/cover.jpg'
+    cover: '../assets/wsr-website/cover.avif'
   }
 ]
 startDate: 2023-06-03
