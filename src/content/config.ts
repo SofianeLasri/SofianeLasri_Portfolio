@@ -1,8 +1,8 @@
-import {defineCollection, reference, z} from 'astro:content';
+import { defineCollection, reference, z } from 'astro:content';
 
 const technologiesCollection = defineCollection({
     type: 'data',
-    schema: ({image}) => z.object({
+    schema: ({ image }) => z.object({
         name: z.string(),
         logo: image(),
         type: z.string()
@@ -17,17 +17,23 @@ const softSkill = z.object({
 
 export type SoftSkill = z.infer<typeof softSkill>;
 
+export type SoftSkillType = 'framework' | 'language' | 'additional';
+
+const softSkillsArray = z.object({
+    framework: z.array(softSkill),
+    language: z.array(softSkill),
+    additional: z.array(softSkill),
+});
+
+export type SoftSkills = z.infer<typeof softSkillsArray>;
+
 const softSkillsCollection = defineCollection({
     type: 'data',
-    schema: z.object({
-        framework: z.array(softSkill),
-        language: z.array(softSkill),
-        additional: z.array(softSkill),
-    })
+    schema: softSkillsArray
 });
 
 const projectsCollection = defineCollection({
-    schema: ({image}) => z.object({
+    schema: ({ image }) => z.object({
         category: z.string(),
         name: z.string(),
         description: z.string(),
@@ -49,7 +55,7 @@ const projectsCollection = defineCollection({
 });
 
 const educationCollection = defineCollection({
-    schema: ({image}) => z.object({
+    schema: ({ image }) => z.object({
         name: z.string(),
         description: z.string(),
         logo: image(),
@@ -59,7 +65,7 @@ const educationCollection = defineCollection({
 });
 
 const careerCollection = defineCollection({
-    schema: ({image}) => z.object({
+    schema: ({ image }) => z.object({
         name: z.string(),
         description: z.string(),
         logo: image(),

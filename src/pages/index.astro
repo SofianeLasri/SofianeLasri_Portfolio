@@ -13,14 +13,14 @@ import ProjectCard from "../components/ProjectCard.astro";
 import atomIcon from '../images/sections-icons/atom.svg?raw';
 import EducationCareerCard from "../components/EducationCareerCard.astro";
 import Navbar from "../components/Navbar.astro";
-import {SoftSkill} from "../content/config";
+import {SoftSkill, SoftSkills, SoftSkillType} from "../content/config";
 
 const lang = getLanguage(Astro.preferredLocale);
 const trans = useTranslations(lang);
 
-const allSoftSkills = await getEntry('soft-skills', lang + '/soft-skills')
-    .then((entry) =>  {
-        if (!entry) return {};
+const allSoftSkills: SoftSkills = await getEntry('soft-skills', lang + '/soft-skills')
+    .then((entry) => {
+        if (!entry) return { framework: [], language: [], additional: [] };
         return entry.data;
     });
 
@@ -82,7 +82,7 @@ const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.endDa
 ---
 
 <Layout title="Sofiane Lasri">
-    <Navbar />
+    <Navbar/>
     <main>
         <section class="hero-wrapper">
             <div class="hero">
@@ -124,9 +124,9 @@ const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.endDa
                            icon={stackIcon}/>
             {Object.keys(allSoftSkills).map((technoType) => (
                     <div class="sub-section">
-                        <h2 class="subtitle">{softSkillsCategoriesTitles[technoType]}</h2>
+                        <h2 class="subtitle">{softSkillsCategoriesTitles[technoType as SoftSkillType]}</h2>
                         <div class="cards">
-                            {allSoftSkills[technoType].map((softSkill: SoftSkill) => {
+                            {(allSoftSkills as SoftSkills)[technoType as SoftSkillType].map((softSkill: SoftSkill) => {
                                 let techno = allTechnologies.find((techno) => techno.id === softSkill.techno.id);
                                 if (!techno) return null;
 
