@@ -1,5 +1,5 @@
 ---
-import {Picture} from 'astro:assets';
+import {Picture, getImage} from 'astro:assets';
 import {getLanguage, useTranslations} from "../i18n/utils";
 import faXmark from '@fortawesome/free-solid-svg-icons/faXmark';
 import faExpand from "@fortawesome/free-solid-svg-icons/faExpand";
@@ -110,20 +110,28 @@ const modalId = 'modal-' + projectSlug;
                                             </div>
                                         </a>
                                 ))}
-                                {medias && medias.map((media) => (
-                                        <a href={media.src}
-                                           data-pswp-width={media.width}
-                                           data-pswp-height={media.height}
-                                           target="_blank"
-                                           class="media">
-                                            <Picture src={media} formats={['avif', 'webp']} alt="" quality="mid"/>
-                                            <div class="overlay">
-                                                <div class="icon">
-                                                    <FontAwesome icon={faExpand}/>
+                                {medias && medias.map(async (media) => {
+                                    let optimizedPicture = await getImage({
+                                        src: media,
+                                        format: 'avif',
+                                        quality: 'high'
+                                    });
+
+                                    return (
+                                            <a href={optimizedPicture.src}
+                                               data-pswp-width={media.width}
+                                               data-pswp-height={media.height}
+                                               target="_blank"
+                                               class="media">
+                                                <Picture src={media} formats={['avif', 'webp']} alt="" quality="mid"/>
+                                                <div class="overlay">
+                                                    <div class="icon">
+                                                        <FontAwesome icon={faExpand}/>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </a>
-                                ))}
+                                            </a>
+                                    );
+                                })}
                             </div>
                         </div>
                 )}
