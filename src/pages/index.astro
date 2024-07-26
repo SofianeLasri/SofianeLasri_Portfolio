@@ -13,13 +13,14 @@ import ProjectCard from "../components/ProjectCard.astro";
 import atomIcon from '../images/sections-icons/atom.svg?raw';
 import EducationCareerCard from "../components/EducationCareerCard.astro";
 import Navbar from "../components/Navbar.astro";
+import {SoftSkill, SoftSkills, SoftSkillType} from "../content/config";
 
 const lang = getLanguage(Astro.preferredLocale);
 const trans = useTranslations(lang);
 
-const allSoftSkills = await getEntry('soft-skills', lang + '/soft-skills')
-    .then((entry) =>  {
-        if (!entry) return {};
+const allSoftSkills: SoftSkills = await getEntry('soft-skills', lang + '/soft-skills')
+    .then((entry) => {
+        if (!entry) return { framework: [], language: [], additional: [] };
         return entry.data;
     });
 
@@ -49,8 +50,7 @@ function formatDate(isoDate: Date | null = null) {
     return date.charAt(0).toUpperCase() + date.slice(1);
 }
 
-// @ts-ignore
-const sortedAndFormattedEducation = education.sort((a, b) => new Date(b.data.startDate) - new Date(a.data.startDate))
+const sortedAndFormattedEducation = education.sort((a, b) => new Date(b.data.startDate).getTime() - new Date(a.data.startDate).getTime())
     .map((education) => ({
         ...education,
         data: {
@@ -60,8 +60,7 @@ const sortedAndFormattedEducation = education.sort((a, b) => new Date(b.data.sta
         }
     }));
 
-// @ts-ignore
-const sortedAndFormattedCareer = career.sort((a, b) => new Date(b.data.startDate) - new Date(a.data.startDate))
+const sortedAndFormattedCareer = career.sort((a, b) => new Date(b.data.startDate).getTime() - new Date(a.data.startDate).getTime())
     .map((career) => ({
         ...career,
         data: {
@@ -71,8 +70,7 @@ const sortedAndFormattedCareer = career.sort((a, b) => new Date(b.data.startDate
         }
     }));
 
-// @ts-ignore
-const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.startDate) - new Date(a.data.startDate))
+const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.endDate).getTime() - new Date(a.data.endDate).getTime())
     .map((project) => ({
         ...project,
         data: {
@@ -84,7 +82,7 @@ const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.start
 ---
 
 <Layout title="Sofiane Lasri">
-    <Navbar />
+    <Navbar/>
     <main>
         <section class="hero-wrapper">
             <div class="hero">
@@ -126,9 +124,9 @@ const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.start
                            icon={stackIcon}/>
             {Object.keys(allSoftSkills).map((technoType) => (
                     <div class="sub-section">
-                        <h2 class="subtitle">{softSkillsCategoriesTitles[technoType]}</h2>
+                        <h2 class="subtitle">{softSkillsCategoriesTitles[technoType as SoftSkillType]}</h2>
                         <div class="cards">
-                            {allSoftSkills[technoType].map((softSkill) => {
+                            {(allSoftSkills as SoftSkills)[technoType as SoftSkillType].map((softSkill: SoftSkill) => {
                                 let techno = allTechnologies.find((techno) => techno.id === softSkill.techno.id);
                                 if (!techno) return null;
 
@@ -155,8 +153,8 @@ const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.start
                             <ProjectCard id={project.slug} projectType={project.data.category} name={project.data.name}
                                          description={project.data.description} body={project.body}
                                          cover={project.data.cover} logo={project.data.logo}
-                                         medias={project.data.medias} startDate={project.data.startDate}
-                                         endDate={project.data.endDate}/>
+                                         medias={project.data.medias} videos={project.data.videos}
+                                         startDate={project.data.startDate} endDate={project.data.endDate}/>
                     ))}
                 </div>
             </div>
