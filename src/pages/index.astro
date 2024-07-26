@@ -49,8 +49,7 @@ function formatDate(isoDate: Date | null = null) {
     return date.charAt(0).toUpperCase() + date.slice(1);
 }
 
-// @ts-ignore
-const sortedAndFormattedEducation = education.sort((a, b) => new Date(b.data.startDate) - new Date(a.data.startDate))
+const sortedAndFormattedEducation = education.sort((a, b) => new Date(b.data.startDate).getTime() - new Date(a.data.startDate).getTime())
     .map((education) => ({
         ...education,
         data: {
@@ -60,8 +59,7 @@ const sortedAndFormattedEducation = education.sort((a, b) => new Date(b.data.sta
         }
     }));
 
-// @ts-ignore
-const sortedAndFormattedCareer = career.sort((a, b) => new Date(b.data.startDate) - new Date(a.data.startDate))
+const sortedAndFormattedCareer = career.sort((a, b) => new Date(b.data.startDate).getTime() - new Date(a.data.startDate).getTime())
     .map((career) => ({
         ...career,
         data: {
@@ -71,8 +69,7 @@ const sortedAndFormattedCareer = career.sort((a, b) => new Date(b.data.startDate
         }
     }));
 
-// @ts-ignore
-const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.startDate) - new Date(a.data.startDate))
+const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.endDate).getTime() - new Date(a.data.endDate).getTime())
     .map((project) => ({
         ...project,
         data: {
@@ -155,8 +152,8 @@ const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.start
                             <ProjectCard id={project.slug} projectType={project.data.category} name={project.data.name}
                                          description={project.data.description} body={project.body}
                                          cover={project.data.cover} logo={project.data.logo}
-                                         medias={project.data.medias} startDate={project.data.startDate}
-                                         endDate={project.data.endDate}/>
+                                         medias={project.data.medias} videos={project.data.videos}
+                                         startDate={project.data.startDate} endDate={project.data.endDate}/>
                     ))}
                 </div>
             </div>

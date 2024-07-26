@@ -1,11 +1,12 @@
 ---
-import {Picture, getImage} from 'astro:assets';
+import {Picture} from 'astro:assets';
 import {getLanguage, useTranslations} from "../i18n/utils";
 import faXmark from '@fortawesome/free-solid-svg-icons/faXmark';
 import faExpand from "@fortawesome/free-solid-svg-icons/faExpand";
+import faFilm from "@fortawesome/free-solid-svg-icons/faFilm";
 import FontAwesome from "./FontAwesome.astro";
 import {marked} from "marked";
-import {GetImageResult, ImageMetadata} from "astro";
+import {ImageMetadata} from "astro";
 
 export interface Props {
     id: string;
@@ -16,11 +17,27 @@ export interface Props {
     cover: ImageMetadata;
     logo: ImageMetadata;
     medias: ImageMetadata[] | undefined;
+    videos: {
+        src: string;
+        cover: ImageMetadata;
+    }[] | undefined;
     startDate: string;
     endDate: string;
 }
 
-const {id, projectType, name, description, body, cover, logo, medias, startDate, endDate} = Astro.props;
+const {
+    id,
+    projectType,
+    name,
+    description,
+    body,
+    cover,
+    logo,
+    medias,
+    videos,
+    startDate,
+    endDate
+} = Astro.props;
 const lang = getLanguage(Astro.preferredLocale);
 const trans = useTranslations(lang);
 const translatedProjectType = trans('project-type.' + projectType);
@@ -75,11 +92,25 @@ const modalId = 'modal-' + projectSlug;
                     <h4>{trans('description')}</h4>
                     <Fragment set:html={formattedBody}/>
                 </div>
-                {medias && medias.length > 0 && (
+                {((medias && medias.length > 0) || (videos && videos.length > 0)) && (
                         <div class="section">
                             <h4>{trans('medias')}</h4>
                             <div class="medias" id={`medias-${modalId}`}>
-                                {medias.map((media) => (
+                                {videos && videos.map((video) => (
+                                        <a href={video.src}
+                                           data-pswp-width={video.cover.width}
+                                           data-pswp-height={video.cover.height}
+                                           data-pswp-type="video"
+                                           class="media">
+                                            <Picture src={video.cover} formats={['avif', 'webp']} alt="" quality="mid"/>
+                                            <div class="overlay">
+                                                <div class="icon">
+                                                    <FontAwesome icon={faFilm}/>
+                                                </div>
+                                            </div>
+                                        </a>
+                                ))}
+                                {medias && medias.map((media) => (
                                         <a href={media.src}
                                            data-pswp-width={media.width}
                                            data-pswp-height={media.height}
@@ -103,6 +134,7 @@ const modalId = 'modal-' + projectSlug;
 
 <script>
     import PhotoSwipeLightbox from "photoswipe/lightbox";
+    import PhotoSwipeVideoPlugin from "../js/photoswipe-video-plugin.esm.min.js";
     import 'photoswipe/style.css';
     import {Modal} from "bootstrap";
 
@@ -113,6 +145,9 @@ const modalId = 'modal-' + projectSlug;
             gallery: `#${medias.id}`,
             children: 'a',
             pswpModule: () => import('photoswipe')
+        });
+        new PhotoSwipeVideoPlugin(lightbox, {
+            // options
         });
         lightbox.init();
         return lightbox;

@@ -37,6 +37,10 @@ const projectsCollection = defineCollection({
             message: "Logo must be at least 200x200 pixels!",
         }),
         medias: z.array(image()).optional(),
+        videos: z.array(z.object({
+            src: z.string().url(),
+            cover: image()
+        })).optional(),
         startDate: z.date(),
         endDate: z.date(),
     }),
