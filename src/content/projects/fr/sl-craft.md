@@ -3,24 +3,24 @@ category: 'java'
 name: SL-Craft
 description: Serveur Minecraft survie développé sur Paper MC (API Spigot).
 usedTechnologies: [ 'java' ]
-cover: ../assets/sl-craft/cover.png
-logo: ../assets/sl-craft/logo.png
-medias: [ '../assets/sl-craft/charte-graphique.jpg',
-          '../assets/sl-craft/maquette-aout2022.png',
-          '../assets/sl-craft/maquette-2.jpg',
-          '../assets/sl-craft/shop.png',
-          '../assets/sl-craft/maquette-1.jpg',
-          '../assets/sl-craft/screenshot-1.png',
-          '../assets/sl-craft/screenshot-2.png',
-          '../assets/sl-craft/screenshot-3.png',
-          '../assets/sl-craft/screenshot-4.png',
-          '../assets/sl-craft/screenshot-5.png',
-          '../assets/sl-craft/screenshot-6.png',
-          '../assets/sl-craft/screenshot-7.png']
+cover: ../assets/sl-craft/cover.avif
+logo: ../assets/sl-craft/logo.avif
+medias: [ '../assets/sl-craft/charte-graphique.avif',
+          '../assets/sl-craft/maquette-aout2022.avif',
+          '../assets/sl-craft/maquette-2.avif',
+          '../assets/sl-craft/shop.avif',
+          '../assets/sl-craft/maquette-1.avif',
+          '../assets/sl-craft/screenshot-1.avif',
+          '../assets/sl-craft/screenshot-2.avif',
+          '../assets/sl-craft/screenshot-3.avif',
+          '../assets/sl-craft/screenshot-4.avif',
+          '../assets/sl-craft/screenshot-5.avif',
+          '../assets/sl-craft/screenshot-6.avif',
+          '../assets/sl-craft/screenshot-7.avif']
 videos: [
   {
     src: 'https://cloud.sl-projects.com//index.php/s/aEyX9nDZiM9f2Xa/download',
-    cover: '../assets/sl-craft/cover.png'
+    cover: '../assets/sl-craft/cover.avif'
   }
 ]
 startDate: 2021-02-01
