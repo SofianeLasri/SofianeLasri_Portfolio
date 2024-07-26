@@ -50,7 +50,7 @@ const modalId = 'modal-' + projectSlug;
 
 <div class="project-card" data-bs-toggle="modal" data-bs-target={`#${modalId}`}>
     <div class="header">
-        <Picture src={cover} formats={['avif', 'webp']} alt={`Couverture du projet ${name}`}/>
+        <Picture src={cover} formats={['avif', 'webp']} alt={`Couverture du projet ${name}`} loading="eager"/>
         <div class="project-type-badge">
             {translatedProjectType}
         </div>
