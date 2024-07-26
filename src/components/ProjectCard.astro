@@ -140,20 +140,18 @@ const modalId = 'modal-' + projectSlug;
 
     const lightboxInstances = new Map();
 
-    function initPhotoSwipeLightbox(medias) {
+    function initPhotoSwipeLightbox(medias: HTMLElement) {
         const lightbox = new PhotoSwipeLightbox({
             gallery: `#${medias.id}`,
             children: 'a',
             pswpModule: () => import('photoswipe')
         });
-        new PhotoSwipeVideoPlugin(lightbox, {
-            // options
-        });
+        new PhotoSwipeVideoPlugin(lightbox);
         lightbox.init();
         return lightbox;
     }
 
-    function updateUrlParams(slug, add = true) {
+    function updateUrlParams(slug: string, add: boolean = true) {
         const url = new URL(window.location.href);
         const urlParams = new URLSearchParams(url.search);
         if (add) {
@@ -173,7 +171,7 @@ const modalId = 'modal-' + projectSlug;
                 const projectSlug = modal.getAttribute('data-project-slug') || '';
                 updateUrlParams(projectSlug);
 
-                const medias = modal.querySelector('.medias');
+                const medias: HTMLElement = modal.querySelector('.medias') as HTMLElement;
                 if (medias) {
                     const lightbox = initPhotoSwipeLightbox(medias);
                     lightboxInstances.set(modal.id, lightbox);

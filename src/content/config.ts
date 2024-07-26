@@ -15,6 +15,8 @@ const softSkill = z.object({
     review: z.string(),
 });
 
+export type SoftSkill = z.infer<typeof softSkill>;
+
 const softSkillsCollection = defineCollection({
     type: 'data',
     schema: z.object({

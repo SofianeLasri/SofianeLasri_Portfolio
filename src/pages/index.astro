@@ -13,6 +13,7 @@ import ProjectCard from "../components/ProjectCard.astro";
 import atomIcon from '../images/sections-icons/atom.svg?raw';
 import EducationCareerCard from "../components/EducationCareerCard.astro";
 import Navbar from "../components/Navbar.astro";
+import {SoftSkill} from "../content/config";
 
 const lang = getLanguage(Astro.preferredLocale);
 const trans = useTranslations(lang);
@@ -125,7 +126,7 @@ const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.endDa
                     <div class="sub-section">
                         <h2 class="subtitle">{softSkillsCategoriesTitles[technoType]}</h2>
                         <div class="cards">
-                            {allSoftSkills[technoType].map((softSkill) => {
+                            {allSoftSkills[technoType].map((softSkill: SoftSkill) => {
                                 let techno = allTechnologies.find((techno) => techno.id === softSkill.techno.id);
                                 if (!techno) return null;
 
