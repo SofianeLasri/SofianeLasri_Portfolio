@@ -168,6 +168,10 @@
                 background-color: $body-bg;
                 inset: 0;
                 z-index: -1;
+
+                @include color-mode(dark) {
+                    background-color: $dark;
+                }
             }
 
             &.show {
