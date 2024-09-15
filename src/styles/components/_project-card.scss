@@ -266,7 +266,7 @@
                     align-items: center;
 
                     // Border radius is half of the parent's border-radius
-                    border-radius: $border-radius / 2;
+                    border-radius: calc($border-radius / 2);
                     margin: $border-width;
                     z-index: 0;
 
