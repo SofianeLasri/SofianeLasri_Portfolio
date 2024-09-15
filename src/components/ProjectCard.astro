@@ -8,8 +8,8 @@ import faImage from "@fortawesome/free-solid-svg-icons/faImage";
 import FontAwesome from "./FontAwesome.astro";
 import {marked} from "marked";
 import {ImageMetadata} from "astro";
-import {Technology} from "../content/config";
 import {getCollection} from "astro:content";
+
 
 export interface Props {
     id: string;
@@ -17,7 +17,7 @@ export interface Props {
     name: string;
     description: string;
     body: string;
-    usedTechnologies: Technology[];
+    usedTechnologies: any;
     cover: ImageMetadata;
     logo: ImageMetadata;
     medias: ImageMetadata[] | undefined;

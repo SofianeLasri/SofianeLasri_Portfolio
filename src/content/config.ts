@@ -1,16 +1,12 @@
 import { defineCollection, reference, z } from 'astro:content';
 
-const technology =  ({ image }) => z.object({
-    name: z.string(),
-    logo: image(),
-    type: z.string(),
-});
-
-export type Technology = z.infer<typeof technology>;
-
 const technologiesCollection = defineCollection({
     type: 'data',
-    schema: technology,
+    schema: ({ image }) => z.object({
+        name: z.string(),
+        logo: image(),
+        type: z.string()
+    }),
 });
 
 const softSkill = z.object({
