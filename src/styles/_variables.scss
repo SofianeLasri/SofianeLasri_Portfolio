@@ -1,5 +1,8 @@
 @use "sass:color";
 
+$enable-grid-classes: false;
+$enable-cssgrid: true;
+
 // Color system
 
 $color-mode-type: media-query;

@@ -31,7 +31,7 @@ export const ui = {
         'hero.welcome': 'Welcome to my site',
         'hero.title': 'Hi! I am',
         'hero.subtitle': 'Full-Stack Developer',
-        'about-me.part1': 'Passionate about application development, I love creating new projects to experiment with new technologies. I also enjoy designing and creating user interfaces, always giving much credit to sites and applications with a polished UI/UX.',
+        'about-me.part1': 'Passionate about application development, I love experimenting new technologies. I also enjoy designing and creating user interfaces, always giving much credit to sites and applications with a polished UI/UX.',
         'about-me.part2': 'Thanks to my experience gained in the industry, as well as through my various personal projects, I have a good command of Laravel, TypeScript, and Sass. :)',
         'btn.download-cv': 'Download my CV',
         'btn.github': 'GitHub',
@@ -49,6 +49,7 @@ export const ui = {
         'meta.education-career': 'Professional Experience',
         'description': 'Description',
         'medias': 'Medias',
+        'used_technologies': 'Used technologies',
     },
     fr: {
         'nav.home': 'Accueil',
@@ -75,7 +76,7 @@ export const ui = {
         'hero.welcome': 'Bienvenue sur mon site',
         'hero.title': 'Salut ! Je suis',
         'hero.subtitle': 'Développeur Full-Stack',
-        'about-me.part1': 'Passionné par le développement d’applications, j’adore créer de nouveaux projets afin d’expérimenter de nouvelles technologies. J’aime également concevoir et réaliser des interfaces graphiques, j’attribue toujours beaucoup de mérite aux sites et applications à l’UI/UX soignée.',
+        'about-me.part1': 'Passionné par le développement d’applications, j’adore expérimenter de nouvelles technologies. J’aime également concevoir et réaliser des interfaces graphiques, j’attribue toujours beaucoup de mérite aux sites et applications à l’UI/UX soignée.',
         'about-me.part2': 'Grâce à mon expérience acquise en entreprise, mais également au travers de mes divers projets personnels, je possède une bonne maîtrise de Laravel, TypeScript et de Sass. :)',
         'btn.download-cv': 'Télécharger mon CV',
         'btn.github': 'GitHub',
@@ -93,6 +94,7 @@ export const ui = {
         'meta.education-career': 'Expérience professionnelle',
         'description': 'Description',
         'medias': 'Médias',
+        'used_technologies': 'Technologies utilisées',
     },
 } as const;
 

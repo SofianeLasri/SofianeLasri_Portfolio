@@ -152,6 +152,7 @@ const sortedAndFormattedProjects = projects.sort((a, b) => new Date(b.data.endDa
                     {sortedAndFormattedProjects.map((project) => (
                             <ProjectCard id={project.slug} projectType={project.data.category} name={project.data.name}
                                          description={project.data.description} body={project.body}
+                                         usedTechnologies={project.data.usedTechnologies}
                                          cover={project.data.cover} logo={project.data.logo}
                                          medias={project.data.medias} videos={project.data.videos}
                                          startDate={project.data.startDate} endDate={project.data.endDate}/>
