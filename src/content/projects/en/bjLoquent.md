@@ -2,7 +2,7 @@
 category: 'java'
 name: Better jLoquent
 description: Java ORM inspired by Laravel Eloquent, forked from the jLoquent project.
-usedTechnologies: ['laravel', 'typescript', 'sass']
+usedTechnologies: ['java']
 cover: ../assets/bjLoquent/bJloquent-cover.avif
 logo: ../assets/bjLoquent/bJloquent-logo.avif
 startDate: 2022-02-19
