@@ -69,3 +69,7 @@ html {
         background-position: 468px 0
     }
 }
+
+img, picture, svg {
+    user-select: none;
+}
