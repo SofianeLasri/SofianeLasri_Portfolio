@@ -7,7 +7,7 @@
     },
     {
       "techno": "vuejs",
-      "review": "Bien que je ne sois pas encore totalement à l’aise avec VueJS, c’est le loin le framework Front-End que je maitrise le mieux.\n\nJ’aime son approche du DOM virtuel, contrairement à React que je trouve beaucoup moins ordonné."
+      "review": "Bien que je ne sois pas encore totalement à l’aise avec VueJS, c’est de loin le framework Front-End que je maitrise le mieux.\n\nJ’aime son approche du DOM virtuel, contrairement à React que je trouve beaucoup moins ordonné."
     },
     {
       "techno": "nestjs",
